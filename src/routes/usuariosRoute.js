@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { AuthUserController } from '../controllers/usuarios/authUserController.js'
 import { CreateUserController } from '../controllers/usuarios/createUserController.js'
 import { GetUserDetailController } from '../controllers/usuarios/GetUserDetailController.js'
+import { UpdateUserController } from '../controllers/usuarios/updateUserController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { validateSchema } from '../middlewares/validateSchema.js'
 import { schemaUsuarios } from '../schema/usuarios/index.js'
@@ -24,3 +25,10 @@ usuariosRoute.post(
 
 // Obter informações de um usuário específico
 usuariosRoute.get('/me', isAuthenticated, new GetUserDetailController().handle)
+
+// Atualiza informações de um usuário
+usuariosRoute.put(
+  '/usuarios',
+  isAuthenticated,
+  new UpdateUserController().handle
+)
