@@ -5,8 +5,10 @@ export const usuarios = pgTable('usuarios', {
   id: uuid().primaryKey().defaultRandom(),
   nome: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
+  telefone: varchar({ length: 20 }).unique(),
   senha: text().notNull(),
   userTipo: userTipoEnum().default('VOLUNTARIO').notNull(),
+  endereco: text().unique(),
 
   criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
   atualizadoEm: timestamp({ withTimezone: true }),
