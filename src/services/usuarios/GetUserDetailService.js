@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
-import { formatDate } from '../../lib/utils.js'
+import { formatDate, formatPhone } from '../../lib/utils.js'
 
 export class GetUserDetailService {
   async execute({ id }) {
@@ -56,6 +56,7 @@ export class GetUserDetailService {
 
     const formattedResult = result.map((row) => ({
       ...row,
+      telefone: formatPhone(row.telefone),
       criadoEm: formatDate(row.criadoEm, true),
       atualizadoEm: formatDate(row.atualizadoEm, true),
 
@@ -63,6 +64,7 @@ export class GetUserDetailService {
       locais: row.locais?.id
         ? {
             ...row.locais,
+            telefone: formatPhone(row.locais.telefone),
             criadoEm: formatDate(row.locais.criadoEm, true),
             atualizadoEm: formatDate(row.locais.atualizadoEm, true),
           }
@@ -71,7 +73,9 @@ export class GetUserDetailService {
       demandas: row.demandas?.id
         ? {
             ...row.demandas,
+            telefone: formatPhone(row.demandas.telefone),
             criadoEm: formatDate(row.demandas.criadoEm, true),
+            atualizadoEm: formatDate(row.demandas.atualizadoEm, true),
           }
         : null,
     }))

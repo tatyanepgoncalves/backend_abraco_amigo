@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthUserController } from '../controllers/usuarios/authUserController.js'
 import { CreateUserController } from '../controllers/usuarios/createUserController.js'
+import { DeleteUserController } from '../controllers/usuarios/deleteUserController.js'
 import { GetUserDetailController } from '../controllers/usuarios/GetUserDetailController.js'
 import { UpdateUserController } from '../controllers/usuarios/updateUserController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
@@ -31,4 +32,11 @@ usuariosRoute.put(
   '/usuarios',
   isAuthenticated,
   new UpdateUserController().handle
+)
+
+// Deleta um usuário by token
+usuariosRoute.delete(
+  '/usuarios',
+  isAuthenticated,
+  new DeleteUserController().handle
 )
