@@ -1,0 +1,23 @@
+services: 
+  backend_abraco_amigo:
+    image: bitnami/postgresql:latest
+    container_name: backend_abraco_amigo
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - "5433:5432"
+    volumes:
+       - ./docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+
+  agape_redis:
+    image: bitnami/redis:latest
+    
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - "6379:6379"

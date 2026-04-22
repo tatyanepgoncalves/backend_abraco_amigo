@@ -1,0 +1,28 @@
+import { integer, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { prioridadeEnum, statusEnum } from './enums.js'
+import { locais } from './locais.js'
+import { usuarios } from './usuarios.js'
+
+export const demandas = pgTable('demandas', {
+  id: uuid().primaryKey().defaultRandom(),
+  usuarioId: uuid()
+    .references(() => usuarios.id, {
+      onDelete: 'cascade',
+    })
+    .unique(),
+  locationId: uuid()
+    .references(() => locais.id, {
+      onDelete: 'cascade',
+    })
+    .unique(),
+  titulo: text().notNull(),
+  descricao: text().notNull(),
+  voluntariosNecessarios: integer().notNull().default(0),
+  voluntariosConfirmados: integer().default(0),
+  prioridade: prioridadeEnum().default('INDEFINIDO').notNull(),
+  status: statusEnum().default('ABERTA').notNull(),
+
+  criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
+  atualizadoEm: timestamp({ withTimezone: true }),
+  deletadoEm: timestamp({ withTimezone: true }),
+})

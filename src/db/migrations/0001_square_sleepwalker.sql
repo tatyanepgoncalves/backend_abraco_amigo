@@ -1,0 +1,1 @@
+ALTER TABLE "locais" ADD CONSTRAINT "locais_gestorId_unique" UNIQUE("gestorId");
