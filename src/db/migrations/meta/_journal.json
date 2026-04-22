@@ -22,6 +22,20 @@
       "when": 1776861458622,
       "tag": "0002_cynical_magus",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1776863877156,
+      "tag": "0003_married_mimic",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1776863951523,
+      "tag": "0004_brainy_midnight",
+      "breakpoints": true
     }
   ]
 }
