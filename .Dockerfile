@@ -18,5 +18,5 @@ COPY . .
 EXPOSE 3333
 
 # O comando mágico: sincroniza o banco e inicia o app
-# Usamos a forma de string para garantir que as variáveis de ambiente sejam lidas corretamente
+# Usa-se a forma de string para garantir que as variáveis de ambiente sejam lidas corretamente
 CMD ["npm", "run", "deploy"]

@@ -2,7 +2,7 @@ import { GetLocationByIdService } from '../../services/locais/GetLocationByIdSer
 
 export class GetLocationByIdController {
   async handle(req, res) {
-    const { id } = req.query
+    const { id } = req.params
     const getLocationByIdService = new GetLocationByIdService()
 
     try {

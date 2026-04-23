@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { ApplyToDemandController } from '../controllers/demandas/applyToDemandController.js'
-import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
+import { ApplyToDemandController } from '../controllers/demandas/ApplyToDemandController.js'
+import { CreateDemandController } from '../controllers/demandas/CreateDemandController.js'
 import { DeleteDemandController } from '../controllers/demandas/DeleteDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
 import { GetUserTasksController } from '../controllers/demandas/GetUserTasksController.js'

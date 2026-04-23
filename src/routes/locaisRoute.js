@@ -5,6 +5,7 @@ import { GetLocationByIdController } from '../controllers/locais/getLocationById
 import { GetLocationController } from '../controllers/locais/getLocationController.js'
 import { UpdateLocationByGestorController } from '../controllers/locais/updateLocationByGestorController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
+import { isGestor } from '../middlewares/isGestor.js'
 
 export const locaisRoute = Router()
 
@@ -18,9 +19,9 @@ locaisRoute.post(
   new CreateLocationController().handle
 )
 
-// Busca location pelo id com query
+// Busca location pelo id com params
 locaisRoute.get(
-  '/locais',
+  '/locais/:id',
   isAuthenticated,
   new GetLocationByIdController().handle
 )
@@ -29,12 +30,13 @@ locaisRoute.get(
 locaisRoute.put(
   '/locais',
   isAuthenticated,
+  isGestor,
   new UpdateLocationByGestorController().handle
 )
 
 // Deleta o local pelo id
 locaisRoute.delete(
-  '/locais',
+  '/locais/:id',
   isAuthenticated,
   new DeleteLocationByGestorController().handle
 )

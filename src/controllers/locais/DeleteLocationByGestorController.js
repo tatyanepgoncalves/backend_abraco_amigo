@@ -2,7 +2,7 @@ import { DeleteLocationByGestorService } from '../../services/locais/DeleteLocat
 
 export class DeleteLocationByGestorController {
   async handle(req, res) {
-    const { id } = req.query
+    const { id } = req.params
     const userId = req.user_id
 
     const deleteLocationService = new DeleteLocationByGestorService()
