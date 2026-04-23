@@ -6,7 +6,7 @@ import { GetDemandByIdController } from '../controllers/demandas/GetDemandByIdCo
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
 import { GetUserTasksController } from '../controllers/demandas/GetUserTasksController.js'
 import { UpdateDemandController } from '../controllers/demandas/UpdateDemandController.js'
-import { UpdateDemandStatusController } from '../controllers/demandas/updateDemandStatusController.js'
+import { UpdateDemandStatusController } from '../controllers/demandas/UpdateDemandStatusController.js'
 import { WithdrawFromDemandController } from '../controllers/demandas/WithdrawFromDemandController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { isGestor } from '../middlewares/isGestor.js'
