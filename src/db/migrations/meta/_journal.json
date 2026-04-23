@@ -50,6 +50,27 @@
       "when": 1776947069990,
       "tag": "0006_moaning_queen_noir",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1776948690439,
+      "tag": "0007_lonely_war_machine",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1776949104832,
+      "tag": "0008_luxuriant_wong",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1776949134837,
+      "tag": "0009_regular_iron_lad",
+      "breakpoints": true
     }
   ]
 }

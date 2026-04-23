@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { ApplyToDemandController } from '../controllers/demandas/applyToDemandController.js'
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
 import { GetDemandByIdController } from '../controllers/demandas/getDemandByIdController.js'
@@ -29,6 +30,12 @@ demandasRoute.post(
   isAuthenticated,
   isGestor,
   new CreateDemandController().handle
+)
+
+// Candidatura de voluntário a demanda
+demandasRoute.post(
+  '/demandas/candidatura/:id',
+  new ApplyToDemandController().handle
 )
 
 // Atualiza informações da demandas apenas GESTOR
