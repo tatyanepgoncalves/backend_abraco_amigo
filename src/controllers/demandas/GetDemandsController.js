@@ -3,10 +3,11 @@ import { GetDemandsService } from '../../services/demandas/GetDemandsService.js'
 export class GetDemandsController {
   async handle(req, res) {
     const getDemandsService = new GetDemandsService()
-    const { status, prioridade, orderBy } = req.query
+    const { titulo, status, prioridade, orderBy } = req.query
 
     try {
       const allDemands = await getDemandsService.execute({
+        titulo,
         status,
         prioridade,
         orderBy,

@@ -1,14 +1,18 @@
-import { and, asc, desc, eq, isNull } from 'drizzle-orm'
+import { and, asc, desc, eq, ilike, isNull } from 'drizzle-orm'
 import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 
 export class GetDemandsService {
   async execute(filters = {}) {
-    const { status, prioridade, orderBy = 'prioridade' } = filters
+    const { titulo, status, prioridade, orderBy = 'prioridade' } = filters
 
     // Monta o array de condições dinâmicas
     const conditions = [isNull(schema.demandas.deletadoEm)]
+
+    if (titulo) {
+      conditions.push(ilike(schema.demandas.titulo, `%${titulo}%`))
+    }
 
     if (status) {
       conditions.push(eq(schema.demandas.status, status))
@@ -17,7 +21,7 @@ export class GetDemandsService {
       conditions.push(eq(schema.demandas.prioridade, prioridade))
     }
 
-    // 2. Busca as demandas com Join e filtros diretos
+    // Busca as demandas com Join e filtros diretos
     let query = db
       .select({
         id: schema.demandas.id,
@@ -38,9 +42,9 @@ export class GetDemandsService {
       })
       .from(schema.demandas)
       .leftJoin(schema.locais, eq(schema.demandas.locationId, schema.locais.id))
-      .where(and(...conditions)) // O SEGREDO ESTÁ AQUI: and(...conditions)
+      .where(and(...conditions))
 
-    // 3. Ordenação
+    // Ordenação
     if (orderBy === 'data') {
       query = query.orderBy(desc(schema.demandas.criadoEm))
     } else {
@@ -49,7 +53,7 @@ export class GetDemandsService {
 
     const allDemands = await query
 
-    // 4. Formata o retorno
+    // Formata o retorno
     return allDemands.map((demand) => ({
       ...demand,
       local: demand.local?.id

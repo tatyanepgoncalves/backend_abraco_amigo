@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
-import { GetDemandsController } from '../controllers/demandas/getDemandsController.js'
+import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 
 export const demandasRoute = Router()
