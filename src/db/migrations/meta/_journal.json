@@ -36,6 +36,41 @@
       "when": 1776863951523,
       "tag": "0004_brainy_midnight",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1776905017331,
+      "tag": "0005_daffy_moira_mactaggert",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1776947069990,
+      "tag": "0006_moaning_queen_noir",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1776948690439,
+      "tag": "0007_lonely_war_machine",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1776949104832,
+      "tag": "0008_luxuriant_wong",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1776949134837,
+      "tag": "0009_regular_iron_lad",
+      "breakpoints": true
     }
   ]
 }

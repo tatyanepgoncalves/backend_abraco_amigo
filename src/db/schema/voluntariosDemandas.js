@@ -1,17 +1,18 @@
-import { pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { schema } from './index.js'
+import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { demandas } from './demandas.js'
 
 export const voluntariosDemandas = pgTable('voluntariosDemandas', {
   id: uuid().primaryKey().defaultRandom(),
-  usuarioId: uuid()
-    .references(() => schema.usuarios.id, {
-      onDelete: 'cascade',
-    })
-    .unique(),
+
+  nome: text().notNull(),
+  email: text().notNull(),
+  telefone: text(),
+  endereco: text().notNull(),
+
   demandaId: uuid()
-    .references(() => schema.demandas.id, {
+    .references(() => demandas.id, {
       onDelete: 'cascade',
     })
-    .unique(),
+    .notNull(),
   criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
 })

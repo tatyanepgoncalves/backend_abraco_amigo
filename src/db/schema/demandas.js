@@ -9,12 +9,12 @@ export const demandas = pgTable('demandas', {
     .references(() => usuarios.id, {
       onDelete: 'cascade',
     })
-    .unique(),
+    .notNull(),
   locationId: uuid()
     .references(() => locais.id, {
       onDelete: 'cascade',
     })
-    .unique(),
+    .notNull(),
   titulo: text().notNull(),
   descricao: text().notNull(),
   voluntariosNecessarios: integer().notNull().default(0),

@@ -37,10 +37,6 @@ export const demandasRelations = relations(demandas, ({ one, many }) => ({
 export const voluntariosDemandasRelations = relations(
   voluntariosDemandas,
   ({ one }) => ({
-    usuario: one(usuarios, {
-      fields: [voluntariosDemandas.usuarioId],
-      references: [usuarios.id],
-    }),
     demanda: one(demandas, {
       fields: [voluntariosDemandas.demandaId],
       references: [demandas.id],
