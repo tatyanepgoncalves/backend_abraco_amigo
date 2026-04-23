@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
+import { GetDemandByIdController } from '../controllers/demandas/getDemandByIdController.js'
 import { UpdateDemandController } from '../controllers/demandas/updateDemandController.js'
 import { UpdateDemandStatusController } from '../controllers/demandas/updateDemandStatusController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
@@ -13,6 +14,13 @@ demandasRoute.get(
   '/demandas',
   isAuthenticated,
   new GetDemandsController().handle
+)
+
+// Busca demanda pelo id
+demandasRoute.get(
+  '/demandas/:id',
+  isAuthenticated,
+  new GetDemandByIdController().handle
 )
 
 // Cria uma demanda no sistema
