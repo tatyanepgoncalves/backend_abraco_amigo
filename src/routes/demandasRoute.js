@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
+import { UpdateDemandController } from '../controllers/demandas/updateDemandController.js'
 import { UpdateDemandStatusController } from '../controllers/demandas/updateDemandStatusController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { isGestor } from '../middlewares/isGestor.js'
@@ -20,6 +21,14 @@ demandasRoute.post(
   isAuthenticated,
   isGestor,
   new CreateDemandController().handle
+)
+
+// Atualiza informações da demandas apenas GESTOR
+demandasRoute.put(
+  '/demandas/:id',
+  isAuthenticated,
+  isGestor,
+  new UpdateDemandController().handle
 )
 
 // Atualiza status da demandas apenas GESTOR
