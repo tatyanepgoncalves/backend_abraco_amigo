@@ -3,6 +3,7 @@ import { ApplyToDemandController } from '../controllers/demandas/applyToDemandCo
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
 import { DeleteDemandController } from '../controllers/demandas/DeleteDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
+import { GetUserTasksController } from '../controllers/demandas/GetUserTasksController.js'
 import { GetDemandByIdController } from '../controllers/demandas/getDemandByIdController.js'
 import { UpdateDemandController } from '../controllers/demandas/updateDemandController.js'
 import { UpdateDemandStatusController } from '../controllers/demandas/updateDemandStatusController.js'
@@ -18,6 +19,9 @@ demandasRoute.get(
   isAuthenticated,
   new GetDemandsController().handle
 )
+
+// Busca aplicações voluntárias pelo email
+demandasRoute.get('/demandas/aplicacoes', new GetUserTasksController().handle)
 
 // Busca demanda pelo id
 demandasRoute.get(
