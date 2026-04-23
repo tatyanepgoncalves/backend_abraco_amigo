@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { ApplyToDemandController } from '../controllers/demandas/applyToDemandController.js'
 import { CreateDemandController } from '../controllers/demandas/createDemandController.js'
+import { DeleteDemandController } from '../controllers/demandas/DeleteDemandController.js'
 import { GetDemandsController } from '../controllers/demandas/GetDemandsController.js'
 import { GetDemandByIdController } from '../controllers/demandas/getDemandByIdController.js'
 import { UpdateDemandController } from '../controllers/demandas/updateDemandController.js'
@@ -59,4 +60,12 @@ demandasRoute.patch(
 demandasRoute.delete(
   '/demandas/desistencia/:id',
   new WithdrawFromDemandController().handle
+)
+
+// Deleta uma demanda
+demandasRoute.delete(
+  '/demandas/:id',
+  isAuthenticated,
+  isGestor,
+  new DeleteDemandController().handle
 )
