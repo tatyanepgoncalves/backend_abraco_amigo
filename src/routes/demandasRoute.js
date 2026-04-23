@@ -5,6 +5,7 @@ import { GetDemandsController } from '../controllers/demandas/GetDemandsControll
 import { GetDemandByIdController } from '../controllers/demandas/getDemandByIdController.js'
 import { UpdateDemandController } from '../controllers/demandas/updateDemandController.js'
 import { UpdateDemandStatusController } from '../controllers/demandas/updateDemandStatusController.js'
+import { WithdrawFromDemandController } from '../controllers/demandas/WithdrawFromDemandController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { isGestor } from '../middlewares/isGestor.js'
 
@@ -52,4 +53,10 @@ demandasRoute.patch(
   isAuthenticated,
   isGestor,
   new UpdateDemandStatusController().handle
+)
+
+// Desistência de vaga de voluntário
+demandasRoute.delete(
+  '/demandas/desistencia/:id',
+  new WithdrawFromDemandController().handle
 )
