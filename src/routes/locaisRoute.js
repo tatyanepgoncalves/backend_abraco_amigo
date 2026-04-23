@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { CreateLocationController } from '../controllers/locais/createLocationController.js'
 import { GetLocationByIdController } from '../controllers/locais/getLocationByIdController.js'
 import { GetLocationController } from '../controllers/locais/getLocationController.js'
+import { UpdateLocationByGestorController } from '../controllers/locais/updateLocationByGestorController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 
 export const locaisRoute = Router()
@@ -21,4 +22,11 @@ locaisRoute.get(
   '/locais',
   isAuthenticated,
   new GetLocationByIdController().handle
+)
+
+// Atualiza as informações do local pelo gestor
+locaisRoute.put(
+  '/locais',
+  isAuthenticated,
+  new UpdateLocationByGestorController().handle
 )
