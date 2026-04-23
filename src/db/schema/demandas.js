@@ -5,12 +5,16 @@ import { usuarios } from './usuarios.js'
 
 export const demandas = pgTable('demandas', {
   id: uuid().primaryKey().defaultRandom(),
-  usuarioId: uuid().references(() => usuarios.id, {
-    onDelete: 'cascade',
-  }),
-  locationId: uuid().references(() => locais.id, {
-    onDelete: 'cascade',
-  }),
+  usuarioId: uuid()
+    .references(() => usuarios.id, {
+      onDelete: 'cascade',
+    })
+    .notNull(),
+  locationId: uuid()
+    .references(() => locais.id, {
+      onDelete: 'cascade',
+    })
+    .notNull(),
   titulo: text().notNull(),
   descricao: text().notNull(),
   voluntariosNecessarios: integer().notNull().default(0),

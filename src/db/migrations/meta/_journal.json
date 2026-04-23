@@ -43,6 +43,13 @@
       "when": 1776905017331,
       "tag": "0005_daffy_moira_mactaggert",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1776947069990,
+      "tag": "0006_moaning_queen_noir",
+      "breakpoints": true
     }
   ]
 }
