@@ -1,4 +1,4 @@
-import { UpdateLocationByGestorService } from '../../services/locais/updateLocationByGestorService.js'
+import { UpdateLocationByGestorService } from '../../services/locais/UpdateLocationByGestorService.js'
 
 export class UpdateLocationByGestorController {
   async handle(req, res) {

@@ -1,4 +1,4 @@
-import { GetLocationService } from '../../services/locais/getLocationService.js'
+import { GetLocationService } from '../../services/locais/GetLocationService.js'
 
 export class GetLocationController {
   async handle(_, res) {
