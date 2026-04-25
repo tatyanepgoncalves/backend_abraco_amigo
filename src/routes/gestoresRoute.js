@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { CreateManagerController } from '../controllers/gestores/CreateManagerController.js'
 import { GetManagerDetailController } from '../controllers/gestores/GetManagerDetailController.js'
+import { UpdateManagerController } from '../controllers/gestores/UpdateManagerController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { validateSchema } from '../middlewares/validateSchema.js'
 import { schemaManagers } from '../schema/gestores/index.js'
@@ -19,4 +20,12 @@ gestoresRoute.get(
   '/gestores/me',
   isAuthenticated,
   new GetManagerDetailController().handle
+)
+
+// Atualiza informações de gestor via token
+gestoresRoute.put(
+  '/gestores/me',
+  isAuthenticated,
+  validateSchema(schemaManagers.updateManagerSchema),
+  new UpdateManagerController().handle
 )
