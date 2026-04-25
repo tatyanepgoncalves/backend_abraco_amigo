@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express from 'express'
+import { gestoresRoute } from './routes/gestoresRoute.js'
 import { voluntariosRoute } from './routes/voluntariosRoute.js'
 
 export const app = express()
@@ -12,3 +13,4 @@ app.get('/', (_, res) => {
 })
 
 app.use(voluntariosRoute)
+app.use(gestoresRoute)

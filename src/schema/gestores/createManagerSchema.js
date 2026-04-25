@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const createUserSchema = z.object({
+export const createManagerSchema = z.object({
   body: z.object({
     nome: z
       .string({ message: 'O nome precisa ser texto.' })
@@ -11,6 +11,5 @@ export const createUserSchema = z.object({
     senha: z
       .string({ message: 'A senha precisa ser texto.' })
       .min(8, { message: 'A senha deve ter pelo menos 8 caracteres.' }),
-    userTipo: z.enum(['GESTOR', 'VOLUNTARIO']).default('VOLUNTARIO'),
   }),
 })
