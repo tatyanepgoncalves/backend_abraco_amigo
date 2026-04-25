@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthManagerController } from '../controllers/gestores/AuthManagerController.js'
 import { CreateManagerController } from '../controllers/gestores/CreateManagerController.js'
+import { DeleteManagerController } from '../controllers/gestores/DeleteManagerController.js'
 import { GetManagerDetailController } from '../controllers/gestores/GetManagerDetailController.js'
 import { UpdateManagerController } from '../controllers/gestores/UpdateManagerController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
@@ -36,4 +37,11 @@ gestoresRoute.put(
   isAuthenticated,
   validateSchema(schemaManagers.updateManagerSchema),
   new UpdateManagerController().handle
+)
+
+// Deleta gestor via token
+gestoresRoute.delete(
+  '/gestores/remocao',
+  isAuthenticated,
+  new DeleteManagerController().handle
 )
