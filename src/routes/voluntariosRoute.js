@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthVolunteerController } from '../controllers/voluntarios/AuthVolunteerController.js'
 import { CreateVolunteerController } from '../controllers/voluntarios/CreateVolunteerController.js'
+import { DeleteVolunteerController } from '../controllers/voluntarios/DeleteVolunteerController.js'
 import { GetVolunteerDetailController } from '../controllers/voluntarios/GetVolunteerDetailController.js'
 import { UpdateVolunteerController } from '../controllers/voluntarios/UpdateVolunteerController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
@@ -36,4 +37,11 @@ voluntariosRoute.put(
   isAuthenticated,
   validateSchema(schemaVoluntarios.updateVolunteerSchema),
   new UpdateVolunteerController().handle
+)
+
+// Deleta voluntário via token
+voluntariosRoute.delete(
+  '/voluntarios/remocao',
+  isAuthenticated,
+  new DeleteVolunteerController().handle
 )
