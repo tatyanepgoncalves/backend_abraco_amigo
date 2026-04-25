@@ -1,10 +1,19 @@
 import { Router } from 'express'
 import { AuthVolunteerController } from '../controllers/voluntarios/AuthVolunteerController.js'
 import { CreateVolunteerController } from '../controllers/voluntarios/CreateVolunteerController.js'
+import { GetVolunteerDetailController } from '../controllers/voluntarios/GetVolunteerDetailController.js'
+import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { validateSchema } from '../middlewares/validateSchema.js'
 import { schemaVoluntarios } from '../schema/voluntarios/index.js'
 
 export const voluntariosRoute = Router()
+
+// Busca informações do usuário via token
+voluntariosRoute.get(
+  '/voluntarios/me',
+  isAuthenticated,
+  new GetVolunteerDetailController().handle
+)
 
 // Cadastrar novo voluntário
 voluntariosRoute.post(
