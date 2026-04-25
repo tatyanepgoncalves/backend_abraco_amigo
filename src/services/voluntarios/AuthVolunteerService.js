@@ -6,19 +6,19 @@ import { redis } from '../../config/ioredis.js'
 import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
-export class AuthUserService {
+export class AuthVolunteerService {
   async execute({ email, senha }) {
-    // Localizar o usuário
-    const user = await db.query.usuarios.findFirst({
-      where: eq(schema.usuarios.email, email),
+    // Localizar o voluntário
+    const volunteer = await db.query.voluntarios.findFirst({
+      where: eq(schema.voluntarios.email, email),
     })
 
-    if (!user) {
+    if (!volunteer) {
       throw new Error('E-mail ou senha incorretos.')
     }
 
     // Comparar a senha
-    const senhaCompare = await compare(senha, user.senha)
+    const senhaCompare = await compare(senha, volunteer.senha)
 
     if (!senhaCompare) {
       throw new Error('E-mail ou senha incorretos.')
@@ -27,22 +27,22 @@ export class AuthUserService {
     // Gerar o Token JWT
     // Use uma string secreta segura no seu .env
     const token = jwt.sign(
-      { nome: user.nome, email: user.email, tipo: user.tipo },
+      { nome: volunteer.nome, email: volunteer.email, tipo: volunteer.tipo },
       env.JWT_SECRET,
       {
-        subject: user.id.toString(),
+        subject: volunteer.id.toString(),
         expiresIn: '3d',
       }
     )
 
-    await redis.set(`auth:${user.id}`, token, 'EX', 86_400 * 3)
+    await redis.set(`auth:${volunteer.id}`, token, 'EX', 86_400 * 3)
 
     return {
       user: {
-        id: user.id,
-        nome: user.nome,
-        email: user.email,
-        userTipo: user.userTipo,
+        id: volunteer.id,
+        nome: volunteer.nome,
+        email: volunteer.email,
+        userTipo: volunteer.userTipo,
       },
       token,
     }
