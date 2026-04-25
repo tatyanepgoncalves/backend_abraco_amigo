@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { CreateManagerController } from '../controllers/gestores/CreateManagerController.js'
+import { GetManagerDetailController } from '../controllers/gestores/GetManagerDetailController.js'
+import { isAuthenticated } from '../middlewares/isAuthenticated.js'
 import { validateSchema } from '../middlewares/validateSchema.js'
 import { schemaManagers } from '../schema/gestores/index.js'
 
@@ -10,4 +12,11 @@ gestoresRoute.post(
   '/gestores',
   validateSchema(schemaManagers.createManagerSchema),
   new CreateManagerController().handle
+)
+
+// Busca por informações do gestor via token
+gestoresRoute.get(
+  '/gestores/me',
+  isAuthenticated,
+  new GetManagerDetailController().handle
 )
