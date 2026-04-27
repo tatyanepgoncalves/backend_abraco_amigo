@@ -1,12 +1,12 @@
 import { integer, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { prioridadeEnum, statusEnum } from './enums.js'
+import { categoriaEnum, prioridadeEnum, statusEnum } from './enums.js'
+import { gestor } from './gestores.js'
 import { locais } from './locais.js'
-import { usuarios } from './usuarios.js'
 
 export const demandas = pgTable('demandas', {
   id: uuid().primaryKey().defaultRandom(),
-  usuarioId: uuid()
-    .references(() => usuarios.id, {
+  gestorId: uuid()
+    .references(() => gestor.id, {
       onDelete: 'cascade',
     })
     .notNull(),
@@ -21,6 +21,7 @@ export const demandas = pgTable('demandas', {
   voluntariosConfirmados: integer().default(0),
   prioridade: prioridadeEnum().default('INDEFINIDO').notNull(),
   status: statusEnum().default('ABERTA').notNull(),
+  categoria: categoriaEnum().default('OUTROS').notNull(),
 
   criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
   atualizadoEm: timestamp({ withTimezone: true }),

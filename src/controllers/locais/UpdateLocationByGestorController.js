@@ -2,7 +2,7 @@ import { UpdateLocationByGestorService } from '../../services/locais/UpdateLocat
 
 export class UpdateLocationByGestorController {
   async handle(req, res) {
-    const { id, nome, endereco, email, telefone } = req.body
+    const { id, nome, endereco, email, telefone, image } = req.body
     const userId = req.user_id
 
     const updateLocationService = new UpdateLocationByGestorService()
@@ -15,6 +15,7 @@ export class UpdateLocationByGestorController {
         email,
         telefone,
         userId,
+        image,
       })
       return res.json(updateLocation)
     } catch (error) {

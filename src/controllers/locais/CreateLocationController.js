@@ -1,6 +1,3 @@
-import { eq } from 'drizzle-orm'
-import { db } from '../../db/connection.js'
-import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 import { CreateLocationService } from '../../services/locais/CreateLocationService.js'
 
@@ -10,18 +7,6 @@ export class CreateLocationController {
 
     const gestorId = req.user_id
 
-    // Busca o usuário no banco para verificar o tipo
-    const usuario = await db.query.usuarios.findFirst({
-      where: eq(schema.usuarios.id, gestorId),
-    })
-
-    // Se for gestor, prossegue com a criação
-    if (!usuario || usuario.userTipo !== 'GESTOR') {
-      return res.status(403).json({
-        error: 'Acesso negado. Apenas gestores podem cadastrar novos locais.',
-      })
-    }
-
     const createLocationService = new CreateLocationService()
 
     try {
@@ -30,8 +15,8 @@ export class CreateLocationController {
         endereco,
         telefone,
         email,
-        gestorId,
         tipoLocal,
+        gestorId,
       })
       return res.status(201).json({
         ...location,

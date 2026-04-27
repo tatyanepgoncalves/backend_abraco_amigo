@@ -1,21 +1,25 @@
 import { demandas } from './demandas.js'
+import { gestor } from './gestores.js'
 import { locais } from './locais.js'
 import {
   demandasRelations,
+  gestoresRelations,
   locaisRelations,
-  usuariosRelations,
   voluntariosDemandasRelations,
+  voluntariosRelations,
 } from './relations.js'
-import { usuarios } from './usuarios.js'
+import { voluntarios } from './voluntarios.js'
 import { voluntariosDemandas } from './voluntariosDemandas.js'
 
 export const schema = {
   locais,
-  usuarios,
   demandas,
   voluntariosDemandas,
-  usuariosRelations,
   demandasRelations,
   locaisRelations,
   voluntariosDemandasRelations,
+  voluntariosRelations,
+  gestoresRelations,
+  voluntarios,
+  gestor,
 }

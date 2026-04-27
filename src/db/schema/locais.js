@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
-import { usuarios } from './usuarios.js'
+import { gestor } from './gestores.js'
 
 export const locais = pgTable('locais', {
   id: uuid().primaryKey().defaultRandom(),
@@ -8,10 +8,11 @@ export const locais = pgTable('locais', {
   telefone: varchar({ length: 20 }).notNull(),
   email: text().unique(),
   gestorId: uuid()
-    .references(() => usuarios.id, {
+    .references(() => gestor.id, {
       onDelete: 'cascade',
     })
     .unique(),
+  image: text(),
 
   tipoLocal: text().notNull().default('ABRIGO'),
 

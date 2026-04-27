@@ -6,11 +6,11 @@ export async function isGestor(req, res, next) {
   const userId = req.user_id
 
   // Busca o usuário no banco de dados
-  const user = await db.query.usuarios.findFirst({
-    where: eq(schema.usuarios.id, userId),
+  const user = await db.query.gestor.findFirst({
+    where: eq(schema.gestor.id, userId),
   })
 
-  if (!user || user.userTipo.toUpperCase() !== 'GESTOR') {
+  if (!user) {
     return res.status(403).json({ error: 'Apenas gestores possuem permissão.' })
   }
 

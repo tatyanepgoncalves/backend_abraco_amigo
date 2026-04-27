@@ -1,8 +1,9 @@
 import cors from 'cors'
 import express from 'express'
 import { demandasRoute } from './routes/demandasRoute.js'
+import { gestoresRoute } from './routes/gestoresRoute.js'
 import { locaisRoute } from './routes/locaisRoute.js'
-import { usuariosRoute } from './routes/usuariosRoute.js'
+import { voluntariosRoute } from './routes/voluntariosRoute.js'
 
 export const app = express()
 
@@ -13,6 +14,7 @@ app.get('/', (_, res) => {
   res.json({ message: 'Bem vindo ao Abraço Amigo Server!' })
 })
 
-app.use(usuariosRoute)
+app.use(voluntariosRoute)
+app.use(gestoresRoute)
 app.use(locaisRoute)
 app.use(demandasRoute)

@@ -14,11 +14,7 @@ import { isGestor } from '../middlewares/isGestor.js'
 export const demandasRoute = Router()
 
 // Busca todas as demandas com filtros opcionais
-demandasRoute.get(
-  '/demandas',
-  isAuthenticated,
-  new GetDemandsController().handle
-)
+demandasRoute.get('/demandas', new GetDemandsController().handle)
 
 // Busca aplicações voluntárias pelo email
 demandasRoute.get('/demandas/aplicacoes', new GetUserTasksController().handle)
