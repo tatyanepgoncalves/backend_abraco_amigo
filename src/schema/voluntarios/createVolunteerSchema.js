@@ -11,6 +11,5 @@ export const createVolunteerSchema = z.object({
     senha: z
       .string({ message: 'A senha precisa ser texto.' })
       .min(8, { message: 'A senha deve ter pelo menos 8 caracteres.' }),
-    userTipo: z.enum(['GESTOR', 'VOLUNTARIO']).default('VOLUNTARIO'),
   }),
 })
