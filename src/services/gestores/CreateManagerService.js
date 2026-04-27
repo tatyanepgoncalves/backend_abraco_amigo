@@ -13,8 +13,12 @@ export class CreateManagerService {
       where: eq(schema.gestor.email, email),
     })
 
-    if (managerAlreadyExists) {
-      throw new Error('Já existe um gestor com este email.')
+    const volunteerEvenExists = await db.query.voluntarios.findFirst({
+      where: eq(schema.voluntarios.email, email),
+    })
+
+    if (managerAlreadyExists || volunteerEvenExists) {
+      throw new Error('Já existe uma conta com este email.')
     }
 
     const senhaHash = await hash(senha, 10)

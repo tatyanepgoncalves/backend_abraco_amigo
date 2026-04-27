@@ -12,9 +12,14 @@ export class CreateVolunteerService {
     const volunteerAlreadyExists = await db.query.voluntarios.findFirst({
       where: eq(schema.voluntarios.email, email),
     })
+    
+    // Verifica se existe 
+    const managerEverExists = await db.query.gestor.findFirst({
+      where: eq(schema.gestor.email, email),
+    })
 
-    if (volunteerAlreadyExists) {
-      throw new Error('Já existe um voluntário com este email.')
+    if (volunteerAlreadyExists || managerEverExists) {
+      throw new Error('Já existe uma conta com este email.')
     }
 
     const senhaHash = await hash(senha, 10)

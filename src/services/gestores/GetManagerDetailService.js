@@ -13,6 +13,7 @@ export class GetManagerDetailService {
         telefone: schema.gestor.telefone,
         endereco: schema.gestor.endereco,
         criadoEm: schema.gestor.criadoEm,
+        image: schema.gestor.image,
         atualizadoEm: schema.gestor.atualizadoEm,
         locais: {
           nome: schema.locais.nome,

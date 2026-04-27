@@ -1,6 +1,8 @@
 import cors from 'cors'
 import express from 'express'
+import { demandasRoute } from './routes/demandasRoute.js'
 import { gestoresRoute } from './routes/gestoresRoute.js'
+import { locaisRoute } from './routes/locaisRoute.js'
 import { voluntariosRoute } from './routes/voluntariosRoute.js'
 
 export const app = express()
@@ -14,3 +16,5 @@ app.get('/', (_, res) => {
 
 app.use(voluntariosRoute)
 app.use(gestoresRoute)
+app.use(locaisRoute)
+app.use(demandasRoute)

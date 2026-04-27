@@ -14,3 +14,11 @@ export const statusEnum = pgEnum('status', [
   'COMPLETA',
   'CANCELADA',
 ])
+
+export const categoriaEnum = pgEnum('categoria_enum', [
+  'SAUDE',
+  'ALIMENTOS',
+  'EDUCACAO',
+  'MEIO AMBIENTE',
+  'OUTROS',
+])

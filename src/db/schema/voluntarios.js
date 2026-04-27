@@ -7,7 +7,7 @@ export const voluntarios = pgTable('voluntarios', {
   telefone: varchar({ length: 20 }).unique(),
   senha: text().notNull(),
   endereco: text().unique(),
-
+  image: text(),
   criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
   atualizadoEm: timestamp({ withTimezone: true }),
   deletadoEm: timestamp({ withTimezone: true }),

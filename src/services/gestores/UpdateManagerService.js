@@ -5,7 +5,7 @@ import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 
 export class UpdateManagerService {
-  async execute({ id, nome, email, senha, telefone, endereco }) {
+  async execute({ id, nome, email, senha, telefone, endereco, image }) {
     // Localizar gestor
     const managerExists = await db.query.gestor.findFirst({
       where: eq(schema.gestor.id, id),
@@ -39,6 +39,10 @@ export class UpdateManagerService {
       dataToUpdate.endereco = endereco
     }
 
+    if (image) {
+      dataToUpdate.image = image
+    }
+
     // Atualizar no banco
     const [managerUpdated] = await db
       .update(schema.gestor)
@@ -50,6 +54,7 @@ export class UpdateManagerService {
         email: schema.gestor.email,
         telefone: schema.gestor.telefone,
         endereco: schema.gestor.endereco,
+        image: schema.gestor.image,
         criadoEm: schema.gestor.criadoEm,
         atualizadoEm: schema.gestor.atualizadoEm,
       })

@@ -12,6 +12,7 @@ export const locais = pgTable('locais', {
       onDelete: 'cascade',
     })
     .unique(),
+  image: text(),
 
   tipoLocal: text().notNull().default('ABRIGO'),
 

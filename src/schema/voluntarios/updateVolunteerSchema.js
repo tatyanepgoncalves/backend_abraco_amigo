@@ -10,5 +10,6 @@ export const updateVolunteerSchema = z.object({
       .optional(),
     telefone: z.string({ message: 'Telefone inválido' }).optional(),
     endereco: z.string({ message: 'Endereço inválido' }).optional(),
+    image: z.string().optional(),
   }),
 })

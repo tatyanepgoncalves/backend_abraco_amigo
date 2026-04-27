@@ -15,6 +15,20 @@
       "when": 1777120728987,
       "tag": "0001_clumsy_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777237594923,
+      "tag": "0002_bored_banshee",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1777296810707,
+      "tag": "0003_burly_ben_grimm",
+      "breakpoints": true
     }
   ]
 }

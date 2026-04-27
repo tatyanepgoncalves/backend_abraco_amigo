@@ -3,7 +3,7 @@ import { UpdateManagerService } from '../../services/gestores/UpdateManagerServi
 export class UpdateManagerController {
   async handle(req, res) {
     const id = req.user_id
-    const { nome, email, senha, telefone, endereco } = req.body
+    const { nome, email, senha, telefone, endereco, image } = req.body
 
     const updateManagerService = new UpdateManagerService()
 
@@ -15,6 +15,7 @@ export class UpdateManagerController {
         senha,
         telefone,
         endereco,
+        image,
       })
 
       return res.status(200).json(manager)

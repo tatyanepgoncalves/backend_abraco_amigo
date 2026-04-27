@@ -7,6 +7,7 @@ export const gestor = pgTable('gestor', {
   telefone: varchar({ length: 20 }).unique(),
   senha: text().notNull(),
   endereco: text().unique(),
+  image: text(),
 
   criadoEm: timestamp({ withTimezone: true }).defaultNow().notNull(),
   atualizadoEm: timestamp({ withTimezone: true }),
