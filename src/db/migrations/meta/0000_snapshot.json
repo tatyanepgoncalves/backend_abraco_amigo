@@ -1,5 +1,5 @@
 {
-  "id": "756cecfb-d58f-40ce-97a2-9ea8b877e8ed",
+  "id": "c3d818d8-d070-4091-a51a-ef1c85afafa8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -68,6 +68,14 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'ABERTA'"
+        },
+        "categoria": {
+          "name": "categoria",
+          "type": "categoria_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'OUTROS'"
         },
         "criadoEm": {
           "name": "criadoEm",
@@ -165,6 +173,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "criadoEm": {
           "name": "criadoEm",
           "type": "timestamp with time zone",
@@ -253,6 +267,12 @@
         "gestorId": {
           "name": "gestorId",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -364,6 +384,12 @@
         },
         "endereco": {
           "name": "endereco",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -486,6 +512,17 @@
     }
   },
   "enums": {
+    "public.categoria_enum": {
+      "name": "categoria_enum",
+      "schema": "public",
+      "values": [
+        "SAUDE",
+        "ALIMENTOS",
+        "EDUCACAO",
+        "MEIO AMBIENTE",
+        "OUTROS"
+      ]
+    },
     "public.prioridade": {
       "name": "prioridade",
       "schema": "public",
@@ -505,14 +542,6 @@
         "EM ANDAMENTO",
         "COMPLETA",
         "CANCELADA"
-      ]
-    },
-    "public.userTipo": {
-      "name": "userTipo",
-      "schema": "public",
-      "values": [
-        "GESTOR",
-        "VOLUNTARIO"
       ]
     }
   },

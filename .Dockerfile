@@ -14,5 +14,5 @@ RUN npm install
 # Copiar o código do projeto
 COPY . .
 
-# O comando mágico: sincroniza o banco e inicia o app
-CMD npx drizzle-kit push ; npm run start
+#  Aguarda 10 segundos para o banco estar pronto, depois executa migrações
+CMD sleep 10 && npx drizzle-kit push && npm run start

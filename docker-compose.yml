@@ -14,7 +14,7 @@ services:
     volumes:
        - ./docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
-  agape_redis:
+  backend_abraco_amigo_redis:
     image: bitnami/redis:latest
     
     environment:

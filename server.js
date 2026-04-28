@@ -1,4 +1,5 @@
 import 'dotenv/config'
+console.log('Environment:', process.env.NODE_ENV || 'development')
 console.log('Loading environment variables...')
 
 import { app } from './src/app.js'
@@ -10,22 +11,23 @@ const PORT = process.env.PORT || env.PORT || 3333
 
 async function startServer() {
   try {
-    // Aguardar conexão com PostgreSQL
+    console.log('Attempting to connect to PostgreSQL...')
     await pg`SELECT 1`
-    console.log('PostgreSQL connected')
+    console.log('✓ PostgreSQL connected')
     
-    // Aguardar conexão com Redis
+    console.log('Attempting to connect to Redis...')
     await redis.ping()
-    console.log('Redis connected')
+    console.log('✓ Redis connected')
     
     app.listen(PORT, () => {
-      console.log(`Server is running on port http://localhost:${PORT}`)
+      console.log(`✓ Server is running on port http://localhost:${PORT}`)
     }).on('error', (err) => {
       console.error('Server error:', err)
       process.exit(1)
     })
   } catch (err) {
-    console.error('Failed to start server:', err)
+    console.error('✗ Failed to start server:', err.message)
+    console.error('Full error:', err)
     process.exit(1)
   }
 }

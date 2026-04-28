@@ -1,0 +1,1 @@
+CREATE DATABASE backend_abraco_amigo;

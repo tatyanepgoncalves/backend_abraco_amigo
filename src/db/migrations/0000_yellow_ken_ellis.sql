@@ -1,6 +1,6 @@
+CREATE TYPE "public"."categoria_enum" AS ENUM('SAUDE', 'ALIMENTOS', 'EDUCACAO', 'MEIO AMBIENTE', 'OUTROS');--> statement-breakpoint
 CREATE TYPE "public"."prioridade" AS ENUM('INDEFINIDO', 'BAIXO', 'MÉDIO', 'ALTO', 'CRÍTICO');--> statement-breakpoint
 CREATE TYPE "public"."status" AS ENUM('ABERTA', 'EM ANDAMENTO', 'COMPLETA', 'CANCELADA');--> statement-breakpoint
-CREATE TYPE "public"."userTipo" AS ENUM('GESTOR', 'VOLUNTARIO');--> statement-breakpoint
 CREATE TABLE "demandas" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"gestorId" uuid NOT NULL,
@@ -11,6 +11,7 @@ CREATE TABLE "demandas" (
 	"voluntariosConfirmados" integer DEFAULT 0,
 	"prioridade" "prioridade" DEFAULT 'INDEFINIDO' NOT NULL,
 	"status" "status" DEFAULT 'ABERTA' NOT NULL,
+	"categoria" "categoria_enum" DEFAULT 'OUTROS' NOT NULL,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
 	"deletadoEm" timestamp with time zone
@@ -23,6 +24,7 @@ CREATE TABLE "gestor" (
 	"telefone" varchar(20),
 	"senha" text NOT NULL,
 	"endereco" text,
+	"image" text,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
 	"deletadoEm" timestamp with time zone,
@@ -38,6 +40,7 @@ CREATE TABLE "locais" (
 	"telefone" varchar(20) NOT NULL,
 	"email" text,
 	"gestorId" uuid,
+	"image" text,
 	"tipoLocal" text DEFAULT 'ABRIGO' NOT NULL,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
@@ -54,6 +57,7 @@ CREATE TABLE "voluntarios" (
 	"telefone" varchar(20),
 	"senha" text NOT NULL,
 	"endereco" text,
+	"image" text,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
 	"deletadoEm" timestamp with time zone,
