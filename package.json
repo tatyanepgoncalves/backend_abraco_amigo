@@ -8,8 +8,9 @@
   "author": "Tatyane Goncalves",
   "license": "ISC",
   "scripts": {
+    "dev": "nodemon server.js", 
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "build": "...",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "db:push": "npx drizzle-kit push",
