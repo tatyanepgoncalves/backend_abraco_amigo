@@ -15,4 +15,4 @@ RUN npm install
 COPY . .
 
 # O comando mágico: sincroniza o banco e inicia o app
-CMD npm run deploy
+CMD npx drizzle-kit push ; npm run start
