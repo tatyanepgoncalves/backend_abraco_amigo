@@ -10,4 +10,4 @@ RUN npm install
 COPY . .
 
 
-CMD npx drizzle-kit push --force && node server.js
+CMD npx drizzle-kit push --force; node server.js
