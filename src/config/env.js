@@ -8,10 +8,4 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
 })
 
-try {
-  export const env = envSchema.parse(process.env)
-} catch (err) {
-  console.error('❌ Environment validation failed:')
-  console.error(err.errors)
-  process.exit(1)
-}
+export const env = envSchema.parse(process.env)
