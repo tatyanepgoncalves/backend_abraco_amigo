@@ -5,7 +5,7 @@ FROM node:20-slim
 RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Diretório de trabalho
-WORKDIR /src
+WORKDIR /app
 
 # Instalar dependências primeiro (aproveita o cache do Docker)
 COPY package*.json ./
@@ -13,10 +13,6 @@ RUN npm install
 
 # Copiar o código do projeto
 COPY . .
-
-# Expor a porta (Railway usa a variável PORT)
-EXPOSE 3333
-
 
 # O comando mágico: sincroniza o banco e inicia o app
 CMD npm run deploy
