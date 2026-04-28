@@ -2,10 +2,17 @@ import z from 'zod'
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
-  DATABASE_URL: z.string().min(1),
-  REDIS_URL: z.string().min(1),
+  DATABASE_URL: z.string().url(),
+  REDIS_URL: z.string().url(),
   JWT_SECRET: z.string().min(1),
-  NODE_ENV: z.enum(['development', 'production']).default('development'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 })
 
-export const env = envSchema.parse(process.env)
+const _env = envSchema.safeParse(process.env)
+
+if (_env.success === false) {
+  console.error('Invalid environment variables:', _env.error.format())
+  throw new Error('Invalid environment variables.')
+}
+
+export const env = _env.data
