@@ -17,6 +17,10 @@ COPY . .
 # Expor a porta (Railway usa a variável PORT)
 EXPOSE 3333
 
+
+# Garante que as migrações existam
+COPY ./src/db/migrations ./src/db/migrations 
+
+
 # O comando mágico: sincroniza o banco e inicia o app
-# Usa-se a forma de string para garantir que as variáveis de ambiente sejam lidas corretamente
 CMD ["npm", "run", "deploy"]

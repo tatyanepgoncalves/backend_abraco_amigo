@@ -12,7 +12,8 @@
     "dev": "nodemon server.js",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "deploy": "npx drizzle-kit push && node server.js"
+    "db:migrate": "npx drizzle-kit migrate",
+    "deploy": "npm run db:migrate && npm run start"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
