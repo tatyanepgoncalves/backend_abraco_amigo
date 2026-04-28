@@ -11,12 +11,11 @@ WORKDIR /src
 COPY package*.json ./
 RUN npm install
 
+# Copiar o código do projeto
+COPY . .
+
 # Expor a porta (Railway usa a variável PORT)
 EXPOSE 3333
-
-
-# Garante que as migrações existam
-COPY ./src/db/migrations ./src/db/migrations 
 
 
 # O comando mágico: sincroniza o banco e inicia o app
