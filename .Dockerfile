@@ -9,5 +9,5 @@ RUN npm install
 
 COPY . .
 
-# Inicia servidor APENAS - sem migrações
-CMD sleep 45 && node server.js
+
+CMD npx drizzle-kit push --force && node server.js
