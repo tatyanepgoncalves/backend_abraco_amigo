@@ -19,4 +19,4 @@ EXPOSE 3333
 
 
 # O comando mágico: sincroniza o banco e inicia o app
-CMD ["npm", "run", "deploy"]
+CMD npm run deploy
