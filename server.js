@@ -1,13 +1,22 @@
 import 'dotenv/config'
-// import { app } from './src/app.js'
+console.log('Loading environment variables...')
 
-import express from 'express'
-const appTeste = express()
+import { app } from './src/app.js'
+console.log('App imported successfully')
 
-const PORT = process.env.PORT || 3333
+import { env } from './src/config/env.js'
+console.log('Environment config loaded:', { PORT: env.PORT, NODE_ENV: env.NODE_ENV })
 
-appTeste.get('/', (req, res) => res.send('O servidor subiu!'))
+const PORT = process.env.PORT || env.PORT || 3333
 
-appTeste.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port: ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server is running on port http://localhost:${PORT}`)
+}).on('error', (err) => {
+  console.error('Server error:', err)
+  process.exit(1)
+})
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason)
+  process.exit(1)
 })
