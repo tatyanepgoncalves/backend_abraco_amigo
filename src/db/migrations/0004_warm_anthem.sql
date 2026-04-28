@@ -1,0 +1,1 @@
+ALTER TYPE "public"."categoria_enum" ADD VALUE 'MEIO AMBIENTE' BEFORE 'OUTROS';
