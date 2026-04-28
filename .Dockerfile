@@ -14,5 +14,9 @@ RUN npm install
 # Copiar o código do projeto
 COPY . .
 
-#  Aguarda 10 segundos para o banco estar pronto, depois executa migrações
-CMD sleep 10 && npx drizzle-kit push && npm run start
+# Aguarda, executa migrações e inicia o servidor com logs detalhados
+CMD sleep 30 && \
+    echo "Running migrations..." && \
+    npx drizzle-kit push && \
+    echo "Migrations completed, starting server..." && \
+    npm run start
