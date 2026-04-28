@@ -17,7 +17,10 @@ COPY . .
 # Expor a porta (Railway usa a variável PORT)
 EXPOSE 3333
 
-# O comando mágico: sincroniza o banco e inicia o app
-# No final do seu Dockerfile
-CMD npx drizzle-kit push && npm run start
 
+# Garante que as migrações existam
+COPY ./src/db/migrations ./src/db/migrations 
+
+
+# O comando mágico: sincroniza o banco e inicia o app
+CMD ["npm", "run", "deploy"]
