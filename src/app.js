@@ -8,7 +8,11 @@ import { voluntariosRoute } from './routes/voluntariosRoute.js'
 export const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
 
 app.get('/', (_, res) => {
   res.json({ message: 'Bem vindo ao Abraço Amigo Server!' })
