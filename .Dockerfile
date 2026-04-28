@@ -11,9 +11,6 @@ WORKDIR /src
 COPY package*.json ./
 RUN npm install
 
-# Copiar o código do projeto
-COPY . .
-
 # Expor a porta (Railway usa a variável PORT)
 EXPOSE 3333
 
