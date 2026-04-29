@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express from 'express'
+import { categoriasRoute } from './routes/categoriasRoute.js'
 import { locaisRoute } from './routes/locaisRoute.js'
 import { usuariosRoute } from './routes/usuariosRoute.js'
 
@@ -22,3 +23,4 @@ app.get('/', (_, res) => {
 
 app.use(usuariosRoute)
 app.use(locaisRoute)
+app.use(categoriasRoute)
