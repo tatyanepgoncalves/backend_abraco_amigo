@@ -4,7 +4,16 @@ import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 
 export class UpdateLocationByGestorService {
-  async execute({ id, nome, endereco, email, telefone, userId, image }) {
+  async execute({
+    id,
+    nome,
+    endereco,
+    email,
+    telefone,
+    userId,
+    image,
+    tipoLocal,
+  }) {
     if (!id) {
       throw new Error('ID do local é obrigatório.')
     }
@@ -33,6 +42,7 @@ export class UpdateLocationByGestorService {
         email,
         telefone,
         image,
+        tipoLocal,
         atualizadoEm: new Date(),
       })
       .where(eq(schema.locais.id, id))

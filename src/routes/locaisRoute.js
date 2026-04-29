@@ -4,20 +4,20 @@ import { DeleteLocationByGestorController } from '../controllers/locais/DeleteLo
 import { GetLocationController } from '../controllers/locais/GetLocationController.js'
 import { UpdateLocationByGestorController } from '../controllers/locais/UpdateLocationByGestorController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
-import { isGestor } from '../middlewares/isGestor.js'
 import { validateSchema } from '../middlewares/validateSchema.js'
+import { verifyUserRole } from '../middlewares/verifyUserRoute.js'
 import { locaisSchema } from '../schema/locais/index.js'
 
 export const locaisRoute = Router()
 
 // Busca todos os locais com filtros opcionais (nome, endereco, tipoLocal)
-locaisRoute.get('/locais', new GetLocationController().handle)
+locaisRoute.get('/locais', isAuthenticated, new GetLocationController().handle)
 
 // Cria um local para ajuda voluntária.
 locaisRoute.post(
   '/locais',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   validateSchema(locaisSchema.createLocationSchema),
   new CreateLocationController().handle
 )
@@ -26,7 +26,7 @@ locaisRoute.post(
 locaisRoute.put(
   '/locais',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   validateSchema(locaisSchema.updateLocationSchema),
   new UpdateLocationByGestorController().handle
 )
@@ -35,6 +35,6 @@ locaisRoute.put(
 locaisRoute.delete(
   '/locais/:id',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   new DeleteLocationByGestorController().handle
 )

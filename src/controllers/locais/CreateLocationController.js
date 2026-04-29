@@ -25,6 +25,7 @@ export class CreateLocationController {
         atualizadoEm: formatDate(location.atualizadoEm, true),
       })
     } catch (error) {
+      console.log(error.message)
       return res.status(400).json({ error: error.message })
     }
   }

@@ -30,22 +30,22 @@ export class GetLocationService {
         tipoLocal: schema.locais.tipoLocal,
         image: schema.locais.image,
         gestor: {
-          id: schema.gestor.id,
-          nome: schema.gestor.nome,
-          email: schema.gestor.email,
-          image: schema.gestor.image,
+          id: schema.usuarios.id,
+          nome: schema.usuarios.nome,
+          email: schema.usuarios.email,
+          image: schema.usuarios.image,
         },
         totalDemandas: count(schema.demandas.id),
         criadoEm: schema.locais.criadoEm,
       })
       .from(schema.locais)
-      .leftJoin(schema.gestor, eq(schema.locais.gestorId, schema.gestor.id))
+      .leftJoin(schema.usuarios, eq(schema.locais.gestorId, schema.usuarios.id))
       .leftJoin(
         schema.demandas,
         eq(schema.demandas.locationId, schema.locais.id)
       )
       .where(and(...filters))
-      .groupBy(schema.locais.id, schema.gestor.id)
+      .groupBy(schema.locais.id, schema.usuarios.id)
       .orderBy(asc(schema.locais.criadoEm))
 
     return allLocations.map((loc) => ({
