@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const authManagerSchema = z.object({
+export const authUserSchema = z.object({
   body: z.object({
     email: z.email({ message: 'Email inválido' }),
     senha: z

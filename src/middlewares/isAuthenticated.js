@@ -1,6 +1,9 @@
+import { eq } from 'drizzle-orm'
 import jwt from 'jsonwebtoken'
 import { env } from '../config/env.js'
 import { redis } from '../config/ioredis.js'
+import { db } from '../db/connection.js'
+import { schema } from '../db/schema/index.js'
 
 export async function isAuthenticated(req, res, next) {
   const authToken = req.headers.authorization
@@ -26,6 +29,15 @@ export async function isAuthenticated(req, res, next) {
     // Valida estrutura do JWT e expira o JWT
     const { sub } = jwt.verify(token, env.JWT_SECRET)
 
+    // Busca usuário no banco
+    const user = await db.query.usuarios.findFirst({
+      where: eq(schema.usuarios.id, sub),
+    })
+
+    if (!user) {
+      return res.status(401).json({ error: 'Usuário não encontrado.' })
+    }
+
     // Verificar se o token existe no Redis (Controle de sessão ativa)
     const tokenNoRedis = await redis.get(`auth:${sub}`)
 
@@ -34,6 +46,7 @@ export async function isAuthenticated(req, res, next) {
     }
 
     // Injetar o ID do usuário na requisição
+    req.user = user
     req.user_id = sub
 
     return next()

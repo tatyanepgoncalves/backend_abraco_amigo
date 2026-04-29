@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const updateManagerSchema = z.object({
+export const updateUserSchema = z.object({
   body: z.object({
     nome: z.string({ message: 'Nome inválido' }).optional(),
     email: z.email({ message: 'Email inválido' }).optional(),
@@ -11,5 +11,6 @@ export const updateManagerSchema = z.object({
     telefone: z.string({ message: 'Telefone inválido' }).optional(),
     endereco: z.string({ message: 'Endereço inválido' }).optional(),
     image: z.string().optional(),
+    tipoUsario: z.enum(['GESTOR', 'VOLUNTARIO']).optional(),
   }),
 })

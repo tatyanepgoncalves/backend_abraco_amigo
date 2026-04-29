@@ -4,15 +4,15 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 
-export class UpdateManagerService {
+export class UpdateUserService {
   async execute({ id, nome, email, senha, telefone, endereco, image }) {
     // Localizar gestor
-    const managerExists = await db.query.gestor.findFirst({
-      where: eq(schema.gestor.id, id),
+    const userExists = await db.query.usuarios.findFirst({
+      where: eq(schema.usuarios.id, id),
     })
 
-    if (!managerExists) {
-      throw new Error('Gestor não encontrado.')
+    if (!userExists) {
+      throw new Error('Usuário não encontrado.')
     }
 
     const dataToUpdate = {
@@ -44,27 +44,27 @@ export class UpdateManagerService {
     }
 
     // Atualizar no banco
-    const [managerUpdated] = await db
-      .update(schema.gestor)
+    const [userUpdated] = await db
+      .update(schema.usuarios)
       .set(dataToUpdate)
-      .where(eq(schema.gestor.id, id))
+      .where(eq(schema.usuarios.id, id))
       .returning({
-        id: schema.gestor.id,
-        nome: schema.gestor.nome,
-        email: schema.gestor.email,
-        telefone: schema.gestor.telefone,
-        endereco: schema.gestor.endereco,
-        image: schema.gestor.image,
-        criadoEm: schema.gestor.criadoEm,
-        atualizadoEm: schema.gestor.atualizadoEm,
+        id: schema.usuarios.id,
+        nome: schema.usuarios.nome,
+        email: schema.usuarios.email,
+        telefone: schema.usuarios.telefone,
+        endereco: schema.usuarios.endereco,
+        image: schema.usuarios.image,
+        criadoEm: schema.usuarios.criadoEm,
+        atualizadoEm: schema.usuarios.atualizadoEm,
       })
 
     return {
-      ...managerUpdated,
-      endereco: managerUpdated.endereco,
-      telefone: formatPhone(managerUpdated.telefone),
-      criadoEm: formatDate(managerUpdated.criadoEm, true),
-      atualizadoEm: formatDate(managerUpdated.atualizadoEm, true),
+      ...userUpdated,
+      endereco: userUpdated.endereco,
+      telefone: formatPhone(userUpdated.telefone),
+      criadoEm: formatDate(userUpdated.criadoEm, true),
+      atualizadoEm: formatDate(userUpdated.atualizadoEm, true),
     }
   }
 }

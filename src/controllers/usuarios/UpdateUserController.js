@@ -1,14 +1,14 @@
-import { UpdateManagerService } from '../../services/gestores/UpdateManagerService.js'
+import { UpdateUserService } from '../../services/usuarios/UpdateUserService.js'
 
-export class UpdateManagerController {
+export class UpdateUserController {
   async handle(req, res) {
     const id = req.user_id
     const { nome, email, senha, telefone, endereco, image } = req.body
 
-    const updateManagerService = new UpdateManagerService()
+    const updateUserService = new UpdateUserService()
 
     try {
-      const manager = await updateManagerService.execute({
+      const user = await updateUserService.execute({
         id,
         nome,
         email,
@@ -18,7 +18,7 @@ export class UpdateManagerController {
         image,
       })
 
-      return res.status(200).json(manager)
+      return res.status(200).json(user)
     } catch (error) {
       return res.status(400).json({ error: error.message })
     }

@@ -3,18 +3,19 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 import { formatDate, formatPhone } from '../../lib/utils.js'
 
-export class GetManagerDetailService {
+export class GetUserDetailService {
   async execute({ id }) {
     const result = await db
       .select({
-        id: schema.gestor.id,
-        nome: schema.gestor.nome,
-        email: schema.gestor.email,
-        telefone: schema.gestor.telefone,
-        endereco: schema.gestor.endereco,
-        criadoEm: schema.gestor.criadoEm,
-        image: schema.gestor.image,
-        atualizadoEm: schema.gestor.atualizadoEm,
+        id: schema.usuarios.id,
+        nome: schema.usuarios.nome,
+        email: schema.usuarios.email,
+        tipoUsuario: schema.usuarios.tipoUsuario,
+        telefone: schema.usuarios.telefone,
+        endereco: schema.usuarios.endereco,
+        criadoEm: schema.usuarios.criadoEm,
+        image: schema.usuarios.image,
+        atualizadoEm: schema.usuarios.atualizadoEm,
         locais: {
           nome: schema.locais.nome,
           email: schema.locais.email,
@@ -22,10 +23,8 @@ export class GetManagerDetailService {
           endereco: schema.locais.endereco,
           tipoLocal: schema.locais.tipoLocal,
           gestor: {
-            id: schema.gestor.id,
-            nome: schema.gestor.nome,
-            telefone: schema.gestor.telefone,
-            email: schema.gestor.email,
+            id: schema.usuarios.id,
+            nome: schema.usuarios.nome,
           },
           criadoEm: schema.locais.criadoEm,
           atualizadoEm: schema.locais.atualizadoEm,
@@ -42,13 +41,16 @@ export class GetManagerDetailService {
           atualizadoEm: schema.demandas.atualizadoEm,
         },
       })
-      .from(schema.gestor)
-      .leftJoin(schema.locais, eq(schema.locais.gestorId, schema.gestor.id))
-      .leftJoin(schema.demandas, eq(schema.demandas.gestorId, schema.gestor.id))
-      .where(eq(schema.gestor.id, id))
+      .from(schema.usuarios)
+      .leftJoin(schema.locais, eq(schema.locais.gestorId, schema.usuarios.id))
+      .leftJoin(
+        schema.demandas,
+        eq(schema.demandas.gestorId, schema.usuarios.id)
+      )
+      .where(eq(schema.usuarios.id, id))
 
     if (!result || result.length === 0) {
-      throw new Error('Gestor não encontrado.')
+      throw new Error('Usuário não encontrado.')
     }
 
     const formattedResult = result.map((row) => ({

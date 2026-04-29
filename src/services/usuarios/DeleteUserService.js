@@ -2,29 +2,29 @@ import { eq } from 'drizzle-orm'
 import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
-export class DeleteManagerService {
+export class DeleteUserService {
   async execute(id) {
     try {
-      const managerExisting = await db.query.gestor.findFirst({
-        where: eq(schema.gestor.id, id),
+      const userExisting = await db.query.usuarios.findFirst({
+        where: eq(schema.usuarios.id, id),
       })
 
-      if (!managerExisting) {
-        throw new Error('Gestor não encontrado.')
+      if (!userExisting) {
+        throw new Error('Usuário não encontrado.')
       }
 
       await db
-        .update(schema.gestor)
+        .update(schema.usuarios)
         .set({ deletadoEm: new Date() })
-        .where(eq(schema.gestor.id, id))
+        .where(eq(schema.usuarios.id, id))
 
       return {
-        message: 'Gestor excluído com sucesso.',
+        message: 'Usuário excluído com sucesso.',
       }
       // biome-ignore lint/complexity/noUselessCatchBinding: it's necessary
       // biome-ignore lint/correctness/noUnusedVariables: it's necessary
     } catch (error) {
-      throw new Error('Erro ao excluir gestor.')
+      throw new Error('Erro ao excluir usuário.')
     }
   }
 }

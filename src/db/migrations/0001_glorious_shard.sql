@@ -1,0 +1,1 @@
+ALTER TABLE "locais" DROP CONSTRAINT "locais_gestorId_unique";

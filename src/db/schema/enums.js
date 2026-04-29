@@ -8,11 +8,6 @@ export const prioridadeEnum = pgEnum('prioridade', [
   'CRÍTICO',
 ])
 
-export const statusEnum = pgEnum('status', [
-  'ABERTA',
-  'EM ANDAMENTO',
-  'COMPLETA',
-  'CANCELADA',
-])
+export const statusEnum = pgEnum('status', ['ABERTA', 'COMPLETA', 'CANCELADA'])
 
 export const tipoUserEnum = pgEnum('tipoUser', ['GESTOR', 'VOLUNTARIO'])

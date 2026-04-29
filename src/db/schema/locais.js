@@ -7,11 +7,9 @@ export const locais = pgTable('locais', {
   endereco: text().notNull().unique(),
   telefone: varchar({ length: 20 }).notNull(),
   email: text().unique(),
-  gestorId: uuid()
-    .references(() => usuarios.id, {
-      onDelete: 'cascade',
-    })
-    .unique(),
+  gestorId: uuid().references(() => usuarios.id, {
+    onDelete: 'cascade',
+  }),
   image: text(),
 
   tipoLocal: text().notNull().default('ABRIGO'),
