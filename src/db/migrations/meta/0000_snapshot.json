@@ -1,9 +1,63 @@
 {
-  "id": "c3d818d8-d070-4091-a51a-ef1c85afafa8",
+  "id": "31bb8c6a-98ae-499b-a62d-01a817520187",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.categorias": {
+      "name": "categorias",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nome": {
+          "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "criadoEm": {
+          "name": "criadoEm",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "atualizadoEm": {
+          "name": "atualizadoEm",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "deletadaEm": {
+          "name": "deletadaEm",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "categorias_nome_unique": {
+          "name": "categorias_nome_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "nome"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.demandas": {
       "name": "demandas",
       "schema": "",
@@ -71,11 +125,9 @@
         },
         "categoria": {
           "name": "categoria",
-          "type": "categoria_enum",
-          "typeSchema": "public",
+          "type": "uuid",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'OUTROS'"
+          "notNull": true
         },
         "criadoEm": {
           "name": "criadoEm",
@@ -99,10 +151,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "demandas_gestorId_gestor_id_fk": {
-          "name": "demandas_gestorId_gestor_id_fk",
+        "demandas_gestorId_usuarios_id_fk": {
+          "name": "demandas_gestorId_usuarios_id_fk",
           "tableFrom": "demandas",
-          "tableTo": "gestor",
+          "tableTo": "usuarios",
           "columnsFrom": [
             "gestorId"
           ],
@@ -124,107 +176,23 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        },
+        "demandas_categoria_categorias_id_fk": {
+          "name": "demandas_categoria_categorias_id_fk",
+          "tableFrom": "demandas",
+          "tableTo": "categorias",
+          "columnsFrom": [
+            "categoria"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.gestor": {
-      "name": "gestor",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "nome": {
-          "name": "nome",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "telefone": {
-          "name": "telefone",
-          "type": "varchar(20)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "senha": {
-          "name": "senha",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endereco": {
-          "name": "endereco",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image": {
-          "name": "image",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "criadoEm": {
-          "name": "criadoEm",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "atualizadoEm": {
-          "name": "atualizadoEm",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "deletadoEm": {
-          "name": "deletadoEm",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "gestor_email_unique": {
-          "name": "gestor_email_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
-        },
-        "gestor_telefone_unique": {
-          "name": "gestor_telefone_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "telefone"
-          ]
-        },
-        "gestor_endereco_unique": {
-          "name": "gestor_endereco_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "endereco"
-          ]
-        }
-      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -305,10 +273,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "locais_gestorId_gestor_id_fk": {
-          "name": "locais_gestorId_gestor_id_fk",
+        "locais_gestorId_usuarios_id_fk": {
+          "name": "locais_gestorId_usuarios_id_fk",
           "tableFrom": "locais",
-          "tableTo": "gestor",
+          "tableTo": "usuarios",
           "columnsFrom": [
             "gestorId"
           ],
@@ -347,8 +315,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.voluntarios": {
-      "name": "voluntarios",
+    "public.usuarios": {
+      "name": "usuarios",
       "schema": "",
       "columns": {
         "id": {
@@ -394,6 +362,14 @@
           "primaryKey": false,
           "notNull": false
         },
+        "tipoUsuario": {
+          "name": "tipoUsuario",
+          "type": "tipoUser",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'VOLUNTARIO'"
+        },
         "criadoEm": {
           "name": "criadoEm",
           "type": "timestamp with time zone",
@@ -418,22 +394,22 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "voluntarios_email_unique": {
-          "name": "voluntarios_email_unique",
+        "usuarios_email_unique": {
+          "name": "usuarios_email_unique",
           "nullsNotDistinct": false,
           "columns": [
             "email"
           ]
         },
-        "voluntarios_telefone_unique": {
-          "name": "voluntarios_telefone_unique",
+        "usuarios_telefone_unique": {
+          "name": "usuarios_telefone_unique",
           "nullsNotDistinct": false,
           "columns": [
             "telefone"
           ]
         },
-        "voluntarios_endereco_unique": {
-          "name": "voluntarios_endereco_unique",
+        "usuarios_endereco_unique": {
+          "name": "usuarios_endereco_unique",
           "nullsNotDistinct": false,
           "columns": [
             "endereco"
@@ -477,10 +453,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "voluntariosDemandas_voluntarioId_voluntarios_id_fk": {
-          "name": "voluntariosDemandas_voluntarioId_voluntarios_id_fk",
+        "voluntariosDemandas_voluntarioId_usuarios_id_fk": {
+          "name": "voluntariosDemandas_voluntarioId_usuarios_id_fk",
           "tableFrom": "voluntariosDemandas",
-          "tableTo": "voluntarios",
+          "tableTo": "usuarios",
           "columnsFrom": [
             "voluntarioId"
           ],
@@ -512,17 +488,6 @@
     }
   },
   "enums": {
-    "public.categoria_enum": {
-      "name": "categoria_enum",
-      "schema": "public",
-      "values": [
-        "SAUDE",
-        "ALIMENTOS",
-        "EDUCACAO",
-        "MEIO AMBIENTE",
-        "OUTROS"
-      ]
-    },
     "public.prioridade": {
       "name": "prioridade",
       "schema": "public",
@@ -542,6 +507,14 @@
         "EM ANDAMENTO",
         "COMPLETA",
         "CANCELADA"
+      ]
+    },
+    "public.tipoUser": {
+      "name": "tipoUser",
+      "schema": "public",
+      "values": [
+        "GESTOR",
+        "VOLUNTARIO"
       ]
     }
   },

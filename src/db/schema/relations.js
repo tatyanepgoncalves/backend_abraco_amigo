@@ -1,57 +1,58 @@
 import { relations } from 'drizzle-orm'
+import { categorias } from './categorias.js'
 import { demandas } from './demandas.js'
-import { gestor } from './gestores.js'
 import { locais } from './locais.js'
-import { voluntarios } from './voluntarios.js'
+import { usuarios } from './usuarios.js'
 import { voluntariosDemandas } from './voluntariosDemandas.js'
 
-export const gestoresRelations = relations(gestor, ({ many }) => ({
-  local: many(locais, {
-    fields: [gestor.id],
-    references: [locais.gestorId],
-  }),
-
-  demandas: many(demandas),
+export const usuariosRelations = relations(usuarios, ({ many }) => ({
+  demandasCriadas: many(demandas),
+  inscricoes: many(voluntariosDemandas),
+  locaisGerenciados: many(locais),
 }))
 
-export const voluntariosRelations = relations(voluntarios, ({ many }) => ({
-  voluntariosDemandas: many(voluntariosDemandas),
-}))
-
-export const locaisRelations = relations(locais, ({ many, one }) => ({
-  demandas: many(demandas),
-  gestor: one(gestor, {
-    fields: [locais.gestorId],
-    references: [gestor.id],
-  }),
-}))
-
+// Relacionamentos para Demandas
 export const demandasRelations = relations(demandas, ({ one, many }) => ({
-  location: one(locais, {
+  gestor: one(usuarios, {
+    fields: [demandas.gestorId],
+    references: [usuarios.id],
+  }),
+  local: one(locais, {
     fields: [demandas.locationId],
     references: [locais.id],
   }),
-
-  gestor: one(gestor, {
-    fields: [demandas.gestorId],
-    references: [gestor.id],
+  categoria: one(categorias, {
+    fields: [demandas.categoria],
+    references: [categorias.id],
   }),
-
-  voluntariosDemandas: many(voluntariosDemandas),
+  candidatos: many(voluntariosDemandas),
 }))
 
-// Relação da Tabela de Junção (Muitos para Muitos)
+// Relacionamentos para Locais
+export const locaisRelations = relations(locais, ({ one, many }) => ({
+  gestor: one(usuarios, {
+    fields: [locais.gestorId],
+    references: [usuarios.id],
+  }),
+  demandas: many(demandas),
+}))
+
+// Relacionamentos para Categorias
+export const categoriasRelations = relations(categorias, ({ many }) => ({
+  demandas: many(demandas),
+}))
+
+// Tabela Pivô (N:N) - Conecta Voluntário e Demanda
 export const voluntariosDemandasRelations = relations(
   voluntariosDemandas,
   ({ one }) => ({
+    voluntario: one(usuarios, {
+      fields: [voluntariosDemandas.voluntarioId],
+      references: [usuarios.id],
+    }),
     demanda: one(demandas, {
       fields: [voluntariosDemandas.demandaId],
       references: [demandas.id],
-    }),
-
-    voluntarios: one(voluntarios, {
-      fields: [voluntariosDemandas.voluntarioId],
-      references: [voluntarios.id],
     }),
   })
 )

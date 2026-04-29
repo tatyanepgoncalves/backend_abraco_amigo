@@ -1,6 +1,15 @@
-CREATE TYPE "public"."categoria_enum" AS ENUM('SAUDE', 'ALIMENTOS', 'EDUCACAO', 'MEIO AMBIENTE', 'OUTROS');--> statement-breakpoint
 CREATE TYPE "public"."prioridade" AS ENUM('INDEFINIDO', 'BAIXO', 'MÉDIO', 'ALTO', 'CRÍTICO');--> statement-breakpoint
 CREATE TYPE "public"."status" AS ENUM('ABERTA', 'EM ANDAMENTO', 'COMPLETA', 'CANCELADA');--> statement-breakpoint
+CREATE TYPE "public"."tipoUser" AS ENUM('GESTOR', 'VOLUNTARIO');--> statement-breakpoint
+CREATE TABLE "categorias" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"nome" text NOT NULL,
+	"criadoEm" timestamp DEFAULT now() NOT NULL,
+	"atualizadoEm" timestamp DEFAULT now(),
+	"deletadaEm" timestamp,
+	CONSTRAINT "categorias_nome_unique" UNIQUE("nome")
+);
+--> statement-breakpoint
 CREATE TABLE "demandas" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"gestorId" uuid NOT NULL,
@@ -11,26 +20,10 @@ CREATE TABLE "demandas" (
 	"voluntariosConfirmados" integer DEFAULT 0,
 	"prioridade" "prioridade" DEFAULT 'INDEFINIDO' NOT NULL,
 	"status" "status" DEFAULT 'ABERTA' NOT NULL,
-	"categoria" "categoria_enum" DEFAULT 'OUTROS' NOT NULL,
+	"categoria" uuid NOT NULL,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
 	"deletadoEm" timestamp with time zone
-);
---> statement-breakpoint
-CREATE TABLE "gestor" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"nome" varchar(255) NOT NULL,
-	"email" varchar(255) NOT NULL,
-	"telefone" varchar(20),
-	"senha" text NOT NULL,
-	"endereco" text,
-	"image" text,
-	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
-	"atualizadoEm" timestamp with time zone,
-	"deletadoEm" timestamp with time zone,
-	CONSTRAINT "gestor_email_unique" UNIQUE("email"),
-	CONSTRAINT "gestor_telefone_unique" UNIQUE("telefone"),
-	CONSTRAINT "gestor_endereco_unique" UNIQUE("endereco")
 );
 --> statement-breakpoint
 CREATE TABLE "locais" (
@@ -50,7 +43,7 @@ CREATE TABLE "locais" (
 	CONSTRAINT "locais_gestorId_unique" UNIQUE("gestorId")
 );
 --> statement-breakpoint
-CREATE TABLE "voluntarios" (
+CREATE TABLE "usuarios" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"nome" varchar(255) NOT NULL,
 	"email" varchar(255) NOT NULL,
@@ -58,12 +51,13 @@ CREATE TABLE "voluntarios" (
 	"senha" text NOT NULL,
 	"endereco" text,
 	"image" text,
+	"tipoUsuario" "tipoUser" DEFAULT 'VOLUNTARIO' NOT NULL,
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL,
 	"atualizadoEm" timestamp with time zone,
 	"deletadoEm" timestamp with time zone,
-	CONSTRAINT "voluntarios_email_unique" UNIQUE("email"),
-	CONSTRAINT "voluntarios_telefone_unique" UNIQUE("telefone"),
-	CONSTRAINT "voluntarios_endereco_unique" UNIQUE("endereco")
+	CONSTRAINT "usuarios_email_unique" UNIQUE("email"),
+	CONSTRAINT "usuarios_telefone_unique" UNIQUE("telefone"),
+	CONSTRAINT "usuarios_endereco_unique" UNIQUE("endereco")
 );
 --> statement-breakpoint
 CREATE TABLE "voluntariosDemandas" (
@@ -73,8 +67,9 @@ CREATE TABLE "voluntariosDemandas" (
 	"criadoEm" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE "demandas" ADD CONSTRAINT "demandas_gestorId_gestor_id_fk" FOREIGN KEY ("gestorId") REFERENCES "public"."gestor"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "demandas" ADD CONSTRAINT "demandas_gestorId_usuarios_id_fk" FOREIGN KEY ("gestorId") REFERENCES "public"."usuarios"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "demandas" ADD CONSTRAINT "demandas_locationId_locais_id_fk" FOREIGN KEY ("locationId") REFERENCES "public"."locais"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "locais" ADD CONSTRAINT "locais_gestorId_gestor_id_fk" FOREIGN KEY ("gestorId") REFERENCES "public"."gestor"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "voluntariosDemandas" ADD CONSTRAINT "voluntariosDemandas_voluntarioId_voluntarios_id_fk" FOREIGN KEY ("voluntarioId") REFERENCES "public"."voluntarios"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "demandas" ADD CONSTRAINT "demandas_categoria_categorias_id_fk" FOREIGN KEY ("categoria") REFERENCES "public"."categorias"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "locais" ADD CONSTRAINT "locais_gestorId_usuarios_id_fk" FOREIGN KEY ("gestorId") REFERENCES "public"."usuarios"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "voluntariosDemandas" ADD CONSTRAINT "voluntariosDemandas_voluntarioId_usuarios_id_fk" FOREIGN KEY ("voluntarioId") REFERENCES "public"."usuarios"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "voluntariosDemandas" ADD CONSTRAINT "voluntariosDemandas_demandaId_demandas_id_fk" FOREIGN KEY ("demandaId") REFERENCES "public"."demandas"("id") ON DELETE cascade ON UPDATE no action;
