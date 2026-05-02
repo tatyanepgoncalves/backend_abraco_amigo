@@ -14,4 +14,4 @@ RUN pnpm install
 COPY . .
 
 # O CMD deve usar npx ou pnpm dlx para o drizzle-kit
-CMD npx drizzle-kit push && node server.js
+CMD npx drizzle-kit push --force && node server.js
