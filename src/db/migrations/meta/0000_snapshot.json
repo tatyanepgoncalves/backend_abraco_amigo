@@ -1,5 +1,5 @@
 {
-  "id": "31bb8c6a-98ae-499b-a62d-01a817520187",
+  "id": "35b46d49-218c-47b6-b0d3-5e09c411d3c2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -113,7 +113,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'INDEFINIDO'"
+          "default": "'BAIXA'"
         },
         "status": {
           "name": "status",
@@ -123,8 +123,8 @@
           "notNull": true,
           "default": "'ABERTA'"
         },
-        "categoria": {
-          "name": "categoria",
+        "categoriaId": {
+          "name": "categoriaId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -177,12 +177,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "demandas_categoria_categorias_id_fk": {
-          "name": "demandas_categoria_categorias_id_fk",
+        "demandas_categoriaId_categorias_id_fk": {
+          "name": "demandas_categoriaId_categorias_id_fk",
           "tableFrom": "demandas",
           "tableTo": "categorias",
           "columnsFrom": [
-            "categoria"
+            "categoriaId"
           ],
           "columnsTo": [
             "id"
@@ -301,13 +301,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "email"
-          ]
-        },
-        "locais_gestorId_unique": {
-          "name": "locais_gestorId_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "gestorId"
           ]
         }
       },
@@ -492,11 +485,10 @@
       "name": "prioridade",
       "schema": "public",
       "values": [
-        "INDEFINIDO",
-        "BAIXO",
-        "MÉDIO",
-        "ALTO",
-        "CRÍTICO"
+        "BAIXA",
+        "MÉDIA",
+        "ALTA",
+        "CRÍTICA"
       ]
     },
     "public.status": {
@@ -504,7 +496,6 @@
       "schema": "public",
       "values": [
         "ABERTA",
-        "EM ANDAMENTO",
         "COMPLETA",
         "CANCELADA"
       ]

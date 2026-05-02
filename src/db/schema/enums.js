@@ -1,11 +1,10 @@
 import { pgEnum } from 'drizzle-orm/pg-core'
 
 export const prioridadeEnum = pgEnum('prioridade', [
-  'INDEFINIDO',
-  'BAIXO',
-  'MÉDIO',
-  'ALTO',
-  'CRÍTICO',
+  'BAIXA',
+  'MÉDIA',
+  'ALTA',
+  'CRÍTICA',
 ])
 
 export const statusEnum = pgEnum('status', ['ABERTA', 'COMPLETA', 'CANCELADA'])

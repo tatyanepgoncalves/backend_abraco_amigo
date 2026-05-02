@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm'
+import { and, eq, isNull } from 'drizzle-orm'
 import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 import { formatDate } from '../../lib/utils.js'
@@ -9,6 +9,7 @@ export class CreateDemandService {
     descricao,
     prioridade,
     locationId,
+    categoriaId,
     userId,
     voluntariosNecessarios,
   }) {
@@ -30,6 +31,18 @@ export class CreateDemandService {
       throw new Error('Você não tem permissão para gerenciar este local.')
     }
 
+    // Verifica se categoria existe
+    const categoria = await db.query.categorias.findFirst({
+      where: and(
+        eq(schema.categorias.id, categoriaId),
+        isNull(schema.categorias.deletadaEm)
+      ),
+    })
+
+    if (!categoria) {
+      throw new Error('Categoria inválida ou inexistente.')
+    }
+
     // Criar a demanda
     const [newDemand] = await db
       .insert(schema.demandas)
@@ -38,10 +51,11 @@ export class CreateDemandService {
         descricao,
         prioridade: prioridade.toUpperCase(),
         locationId,
-        usuarioId: userId,
+        gestorId: userId,
+        categoriaId,
         voluntariosNecessarios: Number(voluntariosNecessarios) || 1,
-        status: 'ABERTA', // Status inicial padrão
-        criadoEm: new Date(),
+        voluntariosConfirmados: 0,
+        status: 'ABERTA',
       })
       .returning()
 

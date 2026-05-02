@@ -8,8 +8,15 @@ export class CreateDemandController {
       prioridade,
       locationId,
       voluntariosNecessarios,
+      categoriaId,
     } = req.body
     const userId = req.user_id
+
+    if (!categoriaId) {
+      return res
+        .status(400)
+        .json({ error: 'O campo categoriaId é obrigatório.' })
+    }
 
     const createDemandService = new CreateDemandService()
 
@@ -17,11 +24,11 @@ export class CreateDemandController {
       const demand = await createDemandService.execute({
         titulo,
         descricao,
-        prioridade: prioridade.toUpperCase(),
+        prioridade: prioridade ? prioridade.toUpperCase() : 'BAIXA',
         locationId,
+        categoriaId,
         voluntariosNecessarios: Number(voluntariosNecessarios),
         userId,
-        criadoEm: new Date(),
       })
 
       return res.status(201).json(demand)

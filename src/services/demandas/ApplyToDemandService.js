@@ -3,10 +3,8 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
 export class ApplyToDemandService {
-  async execute({ demandaId, dadosVoluntario }) {
-    const { nome, email, telefone, endereco } = dadosVoluntario
-
-    //  Verificar se a demanda existe e está aberta
+  async execute({ demandaId, userId }) {
+    // Verificar se a demanda existe
     const demand = await db.query.demandas.findFirst({
       where: eq(schema.demandas.id, demandaId),
     })
@@ -15,40 +13,36 @@ export class ApplyToDemandService {
       throw new Error('Demanda não encontrada.')
     }
 
-    if (demand.status === 'CONCLUIDA') {
-      throw new Error('Esta demanda já foi finalizada.')
+    // No seu SQL o status final é 'COMPLETA' ou 'CANCELADA'
+    if (demand.status !== 'ABERTA') {
+      throw new Error('Esta demanda não está mais aceitando candidaturas.')
     }
 
-    //  Verificar se o usuário já se candidatou (evitar duplicidade)
+    // Verificar se o usuário já se candidatou (voluntarioId)
     const alreadyApplied = await db.query.voluntariosDemandas.findFirst({
       where: and(
         eq(schema.voluntariosDemandas.demandaId, demandaId),
-        eq(schema.voluntariosDemandas.email, email)
+        eq(schema.voluntariosDemandas.voluntarioId, userId) // Ajustado para voluntarioId
       ),
     })
 
     if (alreadyApplied) {
-      throw new Error(
-        'Este e-mail já foi usado para se candidatar a esta demanda.'
-      )
+      throw new Error('Você já está inscrito nesta demanda.')
     }
 
-    // Executar Transação: Criar vínculo + Incrementar Contador
+    // Executar Transação
     return await db.transaction(async (tx) => {
-      // Inserir na tabela pivô
+      // Inserir na tabela pivô (voluntariosDemandas)
       await tx.insert(schema.voluntariosDemandas).values({
         demandaId,
-        nome,
-        email,
-        telefone,
-        endereco,
+        voluntarioId: userId, // Ajustado para bater com o SQL
       })
 
-      // Incrementar o contador currentVolunteers na tabela demands
+      // Incrementar o contador e atualizar data
       const [updatedDemand] = await tx
         .update(schema.demandas)
         .set({
-          currentVolunteers: sql`${schema.demandas.currentVolunteers} + 1`,
+          // sql`COALESCE...` garante que se for null, comece do 0
           voluntariosConfirmados: sql`COALESCE(${schema.demandas.voluntariosConfirmados}, 0) + 1`,
           atualizadoEm: new Date(),
         })

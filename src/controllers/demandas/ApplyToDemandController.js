@@ -2,15 +2,15 @@ import { ApplyToDemandService } from '../../services/demandas/ApplyToDemandServi
 
 export class ApplyToDemandController {
   async handle(req, res) {
-    const { id: demandaId } = req.params
-    const { nome, email, telefone, endereco } = req.body
+    const { demandaId } = req.body
+    const userId = req.user_id
 
     const applyToDemandService = new ApplyToDemandService()
 
     try {
       const result = await applyToDemandService.execute({
         demandaId,
-        dadosVoluntario: { nome, email, telefone, endereco },
+        userId,
       })
 
       return res.status(201).json({

@@ -38,7 +38,7 @@ export class CreateUserService {
 
     const token = jwt.sign(
       {
-        tipo: novoUsuario.tipo,
+        tipo: novoUsuario.tipoUsuario,
       },
       env.JWT_SECRET,
       {

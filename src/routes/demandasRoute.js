@@ -9,34 +9,30 @@ import { UpdateDemandController } from '../controllers/demandas/UpdateDemandCont
 import { UpdateDemandStatusController } from '../controllers/demandas/UpdateDemandStatusController.js'
 import { WithdrawFromDemandController } from '../controllers/demandas/WithdrawFromDemandController.js'
 import { isAuthenticated } from '../middlewares/isAuthenticated.js'
-import { isGestor } from '../middlewares/isGestor.js'
+import { verifyUserRole } from '../middlewares/verifyUserRoute.js'
 
 export const demandasRoute = Router()
 
 // Busca todas as demandas com filtros opcionais
 demandasRoute.get('/demandas', new GetDemandsController().handle)
 
-// Busca aplicações voluntárias pelo email
+// Busca aplicações voluntárias pelo id
 demandasRoute.get('/demandas/aplicacoes', new GetUserTasksController().handle)
 
 // Busca demanda pelo id
-demandasRoute.get(
-  '/demandas/:id',
-  isAuthenticated,
-  new GetDemandByIdController().handle
-)
+demandasRoute.get('/demandas/:id', new GetDemandByIdController().handle)
 
 // Cria uma demanda no sistema
 demandasRoute.post(
   '/demandas',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   new CreateDemandController().handle
 )
 
 // Candidatura de voluntário a demanda
 demandasRoute.post(
-  '/demandas/candidatura/:id',
+  '/demandas/candidatura',
   new ApplyToDemandController().handle
 )
 
@@ -44,7 +40,7 @@ demandasRoute.post(
 demandasRoute.put(
   '/demandas/:id',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   new UpdateDemandController().handle
 )
 
@@ -52,20 +48,22 @@ demandasRoute.put(
 demandasRoute.patch(
   '/demandas/status/:id',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   new UpdateDemandStatusController().handle
 )
 
 // Desistência de vaga de voluntário
 demandasRoute.delete(
-  '/demandas/desistencia/:id',
+  '/demandas/desistencia',
+  isAuthenticated,
+  verifyUserRole('VOLUNTARIO'),
   new WithdrawFromDemandController().handle
 )
 
 // Deleta uma demanda
 demandasRoute.delete(
-  '/demandas/:id',
+  '/demandas/remocao',
   isAuthenticated,
-  isGestor,
+  verifyUserRole('GESTOR'),
   new DeleteDemandController().handle
 )

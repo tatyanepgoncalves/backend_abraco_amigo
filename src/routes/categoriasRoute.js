@@ -9,11 +9,7 @@ import { verifyUserRole } from '../middlewares/verifyUserRoute.js'
 export const categoriasRoute = Router()
 
 // Rota para listar categorias
-categoriasRoute.get(
-  '/categorias',
-  isAuthenticated,
-  new GetCategoriaController().handle
-)
+categoriasRoute.get('/categorias', new GetCategoriaController().handle)
 
 // Cria categoria
 categoriasRoute.post(

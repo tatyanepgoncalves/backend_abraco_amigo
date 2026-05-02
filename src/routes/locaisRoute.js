@@ -11,7 +11,7 @@ import { locaisSchema } from '../schema/locais/index.js'
 export const locaisRoute = Router()
 
 // Busca todos os locais com filtros opcionais (nome, endereco, tipoLocal)
-locaisRoute.get('/locais', isAuthenticated, new GetLocationController().handle)
+locaisRoute.get('/locais', new GetLocationController().handle)
 
 // Cria um local para ajuda voluntária.
 locaisRoute.post(

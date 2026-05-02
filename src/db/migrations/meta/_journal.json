@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1777465903594,
-      "tag": "0000_spicy_vance_astro",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1777487779185,
-      "tag": "0001_glorious_shard",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1777489633380,
-      "tag": "0002_lean_ender_wiggin",
+      "when": 1777494627768,
+      "tag": "0000_light_triathlon",
       "breakpoints": true
     }
   ]

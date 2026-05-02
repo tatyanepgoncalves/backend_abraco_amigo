@@ -20,9 +20,9 @@ export const demandas = pgTable('demandas', {
   descricao: text().notNull(),
   voluntariosNecessarios: integer().notNull().default(0),
   voluntariosConfirmados: integer().default(0),
-  prioridade: prioridadeEnum().default('INDEFINIDO').notNull(),
+  prioridade: prioridadeEnum().default('BAIXA').notNull(),
   status: statusEnum().default('ABERTA').notNull(),
-  categoria: uuid()
+  categoriaId: uuid()
     .references(() => categorias.id, {
       onDelete: 'cascade',
     })

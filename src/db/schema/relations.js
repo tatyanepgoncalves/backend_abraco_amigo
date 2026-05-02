@@ -22,7 +22,7 @@ export const demandasRelations = relations(demandas, ({ one, many }) => ({
     references: [locais.id],
   }),
   categoria: one(categorias, {
-    fields: [demandas.categoria],
+    fields: [demandas.categoriaId],
     references: [categorias.id],
   }),
   candidatos: many(voluntariosDemandas),
