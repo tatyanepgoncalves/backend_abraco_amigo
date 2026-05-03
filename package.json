@@ -13,8 +13,9 @@
     "build": "...",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "db:migrate": "node src/db/runMigrations.js",
     "db:push": "npx drizzle-kit push",
-    "deploy": "npm run db:push && npm run start"
+    "deploy": "npm run db:migrate && npm run start"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
