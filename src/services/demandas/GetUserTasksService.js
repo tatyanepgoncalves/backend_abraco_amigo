@@ -3,7 +3,7 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
 export class GetUserTasksService {
-  async execute(email) {
+  async execute(id) {
     // Buscamos na tabela de junção, trazendo os dados da demanda e do local
     const tasks = await db
       .select({
@@ -28,7 +28,7 @@ export class GetUserTasksService {
         schema.locais,
         eq(schema.demandas.locationId, schema.locais.id)
       )
-      .where(eq(schema.voluntariosDemandas.email, email))
+      .where(eq(schema.voluntariosDemandas.voluntarioId, id))
       .orderBy(schema.demandas.prioridade)
 
     return tasks

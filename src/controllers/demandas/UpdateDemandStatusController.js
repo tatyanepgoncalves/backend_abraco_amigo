@@ -2,8 +2,7 @@ import { UpdateDemandStatusService } from '../../services/demandas/UpdateDemandS
 
 export class UpdateDemandStatusController {
   async handle(req, res) {
-    const { id } = req.params
-    const { status } = req.body
+    const { demandaId, status } = req.body
     const userId = req.user_id
 
     if (!status) {
@@ -16,7 +15,7 @@ export class UpdateDemandStatusController {
 
     try {
       const updated = await updateDemandStatusService.execute({
-        demandId: id,
+        demandaId,
         status,
         userId,
       })

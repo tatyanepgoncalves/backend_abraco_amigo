@@ -2,14 +2,14 @@ import { DeleteDemandService } from '../../services/demandas/DeleteDemandService
 
 export class DeleteDemandController {
   async handle(req, res) {
-    const { id } = req.params
+    const { demandaId } = req.body
     const userId = req.user_id
 
     const deleteDemandService = new DeleteDemandService()
 
     try {
       const result = await deleteDemandService.execute({
-        demandId: id,
+        demandaId,
         userId,
       })
 

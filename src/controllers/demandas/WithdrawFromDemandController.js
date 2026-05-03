@@ -2,15 +2,15 @@ import { WithdrawFromDemandService } from '../../services/demandas/WithdrawFromD
 
 export class WithdrawFromDemandController {
   async handle(req, res) {
-    const { id: demandId } = req.params
-    const { email } = req.body
+    const { demandaId } = req.body
+    const userId = req.user_id
 
     const withdrawService = new WithdrawFromDemandService()
 
     try {
       const result = await withdrawService.execute({
-        demandId,
-        email,
+        demandaId,
+        userId,
       })
 
       return res.status(200).json({

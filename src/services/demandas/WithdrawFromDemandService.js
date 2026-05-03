@@ -3,18 +3,29 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
 export class WithdrawFromDemandService {
-  async execute({ demandId, email }) {
+  async execute({ demandaId, userId }) {
     // Verificar se o vínculo existe
     const application = await db.query.voluntariosDemandas.findFirst({
       where: and(
-        eq(schema.voluntariosDemandas.demandaId, demandId),
-        eq(schema.voluntariosDemandas.email, email)
+        eq(schema.voluntariosDemandas.demandaId, demandaId),
+        eq(schema.voluntariosDemandas.voluntarioId, userId)
       ),
     })
 
     if (!application) {
       throw new Error(
-        'Nenhuma candidatura encontrada para este e-mail nesta demanda.'
+        'Você não possui uma candidatura ativa para esta demanda.'
+      )
+    }
+
+    // Verificar se a demanda ainda permite alterações (não está completa/cancelada)
+    const demand = await db.query.demandas.findFirst({
+      where: eq(schema.demandas.id, demandaId),
+    })
+
+    if (demand?.status !== 'ABERTA') {
+      throw new Error(
+        'Não é possível desistir de uma demanda que já foi finalizada ou cancelada.'
       )
     }
 
@@ -25,8 +36,8 @@ export class WithdrawFromDemandService {
         .delete(schema.voluntariosDemandas)
         .where(
           and(
-            eq(schema.voluntariosDemandas.demandaId, demandId),
-            eq(schema.voluntariosDemandas.email, email)
+            eq(schema.voluntariosDemandas.demandaId, demandaId),
+            eq(schema.voluntariosDemandas.voluntarioId, userId)
           )
         )
 
@@ -34,10 +45,10 @@ export class WithdrawFromDemandService {
       const [updatedDemand] = await tx
         .update(schema.demandas)
         .set({
-          currentVolunteers: sql`GREATEST(${schema.demandas.currentVolunteers} - 1, 0)`,
+          voluntariosConfirmados: sql`GREATEST(${schema.demandas.voluntariosConfirmados} - 1, 0)`,
           atualizadoEm: new Date(),
         })
-        .where(eq(schema.demandas.id, demandId))
+        .where(eq(schema.demandas.id, demandaId))
         .returning()
 
       return updatedDemand

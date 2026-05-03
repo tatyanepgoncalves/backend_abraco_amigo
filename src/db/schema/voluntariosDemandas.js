@@ -1,12 +1,12 @@
 import { pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { demandas } from './demandas.js'
-import { voluntarios } from './voluntarios.js'
+import { usuarios } from './usuarios.js'
 
 export const voluntariosDemandas = pgTable('voluntariosDemandas', {
   id: uuid().primaryKey().defaultRandom(),
 
   voluntarioId: uuid()
-    .references(() => voluntarios.id, {
+    .references(() => usuarios.id, {
       onDelete: 'cascade',
     })
     .notNull(),

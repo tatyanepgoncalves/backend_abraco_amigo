@@ -3,10 +3,10 @@ import { db } from '../../db/connection.js'
 import { schema } from '../../db/schema/index.js'
 
 export class DeleteDemandService {
-  async execute({ demandId, userId }) {
+  async execute({ demandaId, userId }) {
     // Buscar a demanda com o local para validar a propriedade
     const demand = await db.query.demandas.findFirst({
-      where: eq(schema.demandas.id, demandId),
+      where: eq(schema.demandas.id, demandaId),
     })
 
     if (!demand) {
@@ -27,7 +27,7 @@ export class DeleteDemandService {
     await db
       .update(schema.demandas)
       .set({ deletadoEm: new Date() })
-      .where(eq(schema.demandas.id, demandId))
+      .where(eq(schema.demandas.id, demandaId))
 
     return { message: 'Demanda removida com sucesso.' }
   }

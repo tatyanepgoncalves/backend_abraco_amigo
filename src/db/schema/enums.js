@@ -1,24 +1,12 @@
 import { pgEnum } from 'drizzle-orm/pg-core'
 
 export const prioridadeEnum = pgEnum('prioridade', [
-  'INDEFINIDO',
-  'BAIXO',
-  'MÉDIO',
-  'ALTO',
-  'CRÍTICO',
+  'BAIXA',
+  'MÉDIA',
+  'ALTA',
+  'CRÍTICA',
 ])
 
-export const statusEnum = pgEnum('status', [
-  'ABERTA',
-  'EM ANDAMENTO',
-  'COMPLETA',
-  'CANCELADA',
-])
+export const statusEnum = pgEnum('status', ['ABERTA', 'COMPLETA', 'CANCELADA'])
 
-export const categoriaEnum = pgEnum('categoria_enum', [
-  'SAUDE',
-  'ALIMENTOS',
-  'EDUCACAO',
-  'MEIO AMBIENTE',
-  'OUTROS',
-])
+export const tipoUserEnum = pgEnum('tipoUser', ['GESTOR', 'VOLUNTARIO'])

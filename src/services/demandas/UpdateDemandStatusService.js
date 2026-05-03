@@ -4,7 +4,7 @@ import { schema } from '../../db/schema/index.js'
 import { formatDate } from '../../lib/utils.js'
 
 export class UpdateDemandStatusService {
-  async execute({ demandId, status, userId }) {
+  async execute({ demandaId, status, userId }) {
     // Buscar a demanda e o local associado para validar o dono
     const demand = await db
       .select({
@@ -14,7 +14,7 @@ export class UpdateDemandStatusService {
       })
       .from(schema.demandas)
       .leftJoin(schema.locais, eq(schema.demandas.locationId, schema.locais.id))
-      .where(eq(schema.demandas.id, demandId))
+      .where(eq(schema.demandas.id, demandaId))
       .limit(1)
 
     const demandData = demand[0]
@@ -37,7 +37,7 @@ export class UpdateDemandStatusService {
         status: status.toUpperCase(),
         atualizadoEm: new Date(),
       })
-      .where(eq(schema.demandas.id, demandId))
+      .where(eq(schema.demandas.id, demandaId))
       .returning()
 
     return {
