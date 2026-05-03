@@ -13,4 +13,4 @@ RUN pnpm install
 
 COPY . .
 
-CMD node server.js
+CMD npx drizzle-kit generate && npx drizzle-kit migrate && node server.js
