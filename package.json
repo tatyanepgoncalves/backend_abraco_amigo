@@ -15,8 +15,8 @@
     "fix": "ultracite fix",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
-    "db:push": "npx drizzle-kit push",
-    "deploy": "npm run db:migrate && npm run start"
+    "db:push": "npx drizzle-kit push --force",
+    "deploy": "npm run db:push && npm run start"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
