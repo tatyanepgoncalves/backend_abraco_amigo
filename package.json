@@ -13,7 +13,8 @@
     "build": "...",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "db:migrate": "node src/db/runMigrations.js",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
     "db:push": "npx drizzle-kit push",
     "deploy": "npm run db:migrate && npm run start"
   },
