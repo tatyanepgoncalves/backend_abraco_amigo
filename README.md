@@ -2,16 +2,16 @@
 
 Este é o servidor de API do projeto **Abraço Amigo**, um sistema de gestão de demandas voluntárias e locais de ajuda comunitária. O sistema permite que gestores cadastrem locais e necessidades (demandas) e que voluntários se candidatem a essas causas.
 
-- [Documentação com Postman](https://documenter.getpostman.com/view/42446508/2sBXqGpgDu)
-
 ## 🚀 Tecnologias Utilizadas
 
 - **Node.js** (Ambiente de execução)
-- **Express** (Framework web)
+- **Fastify** (Framework web)
 - **Drizzle ORM** (Interação com banco de dados)
 - **PostgreSQL** (Banco de dados relacional)
 - **pnpm** (Gerenciador de pacotes)
-- **JWT** (Autenticação)
+- **JWT + Bcryptjs** (Autenticação)
+- **Zod** (Validação)
+- **Ultracite + Biome** (Lint e formatação de código)
 
 ## 📦 Instalação e Configuração
 
